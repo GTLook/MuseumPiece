@@ -12,39 +12,35 @@ import MuseumPage from './MuseumPage'
 import GalleryPage from './GalleryPage'
 import ArtPage from './ArtPage'
 
-
 //CSS
 import '../css/App.css';
 
 class App extends Component {
 
   componentDidMount(){
-
     this.props.getAllMuseums()
-
-    request('/auth/token')
-      .then(response => {
-        AuthenticationService.setAuthState(response.data)
-        return request('/users')
-      })
-      .then(response => {
-        const authState = AuthenticationService.getAuthState()
-        const activeUser = response.data.data.find(el => el.id === authState.id)
-        AuthenticationService.setAuthState(activeUser)
-      })
+    // request('/auth/token')
+    //   .then(response => {
+    //     AuthenticationService.setAuthState(response.data)
+    //     return request('/users')
+    //   })
+    //   .then(response => {
+    //     const authState = AuthenticationService.getAuthState()
+    //     const activeUser = response.data.data.find(el => el.id === authState.id)
+    //     AuthenticationService.setAuthState(activeUser)
+    //   })
   }
 
   render(){
     return (
       <div>
-        <p> Hello world! </p>
         <BrowserRouter>
           <div>
             <Switch>
               <Route exact path='/' component={ Home } />
               <Route exact path='/:museumId' component={ MuseumPage } />
-              <Route exact path='/:galleryId' component={ GalleryPage } />
-              <Route exact path='/:artId' component={ ArtPage } />
+              <Route exact path='/:museumId/:galleryId' component={ GalleryPage } />
+              <Route exact path='/:museumId/:galleryId/:artId' component={ ArtPage } />
             </Switch>
           </div>
         </BrowserRouter>
@@ -53,6 +49,7 @@ class App extends Component {
     )
   }
 }
+
 
 const mapDispatchToProps = dispatch => bindActionCreators({getAllMuseums}, dispatch)
 export default connect(null, mapDispatchToProps)(App)

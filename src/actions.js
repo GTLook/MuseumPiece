@@ -11,7 +11,7 @@ const API = `${process.env.REACT_APP_BACKEND}`
 
 export const getAllMuseums = () => (
   dispatch => {
-    axios.get(`${API}/api/museums`)
+    axios.get(`${API}/api/museum/`)
     .then((response) => {
       dispatch({
         type: GET_ALL_MUSEUMS,

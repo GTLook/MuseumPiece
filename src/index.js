@@ -10,7 +10,11 @@ import { Provider } from 'react-redux'
 import thunk from 'redux-thunk'
 import reducers from './reducers'
 
+import { getAllMuseums } from './actions'
+
 const store = createStore(reducers, applyMiddleware(thunk))
+
+store.dispatch(getAllMuseums())
 
 ReactDOM.render(
     <Provider store={store}>
