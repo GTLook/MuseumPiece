@@ -1,0 +1,10 @@
+/*  Utility */
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  box-sizing: border-box;
+  color: rgb(72,72,72);
+  text-align: left;
+}
