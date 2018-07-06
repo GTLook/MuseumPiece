@@ -19,7 +19,7 @@ constructor(props) {
 
 
   setRef = (webcam) => {
-      this.webcam = webcam;
+      this.webcam = webcam
     }
 
     capture = () => {
@@ -31,10 +31,10 @@ render() {
       <div>
         <Webcam
           audio={false}
-          height={350}
+          height={1280}
           ref={this.setRef}
           screenshotFormat="image/jpeg"
-          width={350}
+          width={720}
           videoConstraints={this.constraints}
         />
         <button onClick={this.capture}>Capture photo</button>
