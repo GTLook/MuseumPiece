@@ -13,6 +13,7 @@
     "react-router-dom": "^4.3.1",
     "react-scripts": "1.1.4",
     "react-touch": "^0.4.3",
+    "react-webcam": "^1.0.1",
     "redux": "^4.0.0",
     "redux-thunk": "^2.3.0",
     "shortid": "^2.2.8"

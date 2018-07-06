@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import {Col, Row } from 'react-materialize'
-import Camera from 'react-camera'
-
+//import Camera from 'react-camera'
+import Webcam from 'react-webcam'
 
 import { connect } from 'react-redux'
 import { museumList } from '../actions'
@@ -13,65 +13,60 @@ class ArtImage extends Component {
 
 constructor(props) {
     super(props)
-    this.takePicture = this.takePicture.bind(this)
+    this.constraints = { width: 1280, height: 720, facingMode: "environment" }
+    this.state = {stream:null}
   }
 
-takePicture() {
-    this.camera.capture()
-    .then(blob => {
-      this.img.src = URL.createObjectURL(blob)
-      this.img.onload = () => { URL.revokeObjectURL(this.src) }
-    })
-  }
+
+  setRef = (webcam) => {
+      this.webcam = webcam;
+    }
+
+    capture = () => {
+       const imageSrc = this.webcam.getScreenshot();
+     }
 
 render() {
-
   return (
-      <div style={style.container}>
-        <Camera style={style.preview}
-          ref={(cam) => {
-            this.camera = cam
-          }}
-        >
-          <div style={style.captureContainer} onClick={this.takePicture}>
-            <div style={style.captureButton} />
-          </div>
-        </Camera>
-        <img
-          style={style.captureImage}
-          ref={(img) => {
-            this.img = img;
-          }}
+      <div>
+        <Webcam
+          audio={false}
+          height={350}
+          ref={this.setRef}
+          screenshotFormat="image/jpeg"
+          width={350}
+          videoConstraints={this.constraints}
         />
+        <button onClick={this.capture}>Capture photo</button>
       </div>
     )
   }
 }
-
-const style = {
-  preview: {
-    position: 'relative',
-  },
-  captureContainer: {
-    display: 'flex',
-    position: 'absolute',
-    justifyContent: 'center',
-    zIndex: 1,
-    bottom: 0,
-    width: '100%'
-  },
-  captureButton: {
-    backgroundColor: '#fff',
-    borderRadius: '50%',
-    height: 56,
-    width: 56,
-    color: '#000',
-    margin: 20
-  },
-  captureImage: {
-    width: '100%',
-  }
-}
+//
+// const style = {
+//   preview: {
+//     position: 'relative',
+//   },
+//   captureContainer: {
+//     display: 'flex',
+//     position: 'absolute',
+//     justifyContent: 'center',
+//     zIndex: 1,
+//     bottom: 0,
+//     width: '100%'
+//   },
+//   captureButton: {
+//     backgroundColor: '#fff',
+//     borderRadius: '50%',
+//     height: 56,
+//     width: 56,
+//     color: '#000',
+//     margin: 20
+//   },
+//   captureImage: {
+//     width: '100%',
+//   }
+// }
 
 
 const mapStateToProps = ({museumList}) => ({museumList})
