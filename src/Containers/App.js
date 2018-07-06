@@ -38,7 +38,7 @@ class App extends Component {
         <BrowserRouter>
           <div>
             <Switch>
-              <Route exact path='/' component={ ArtImage } />
+              <Route exact path='/' component={ Home } />
               <Route exact path='/:museumId' component={ MuseumPage } />
               <Route exact path='/:museumId/:galleryId' component={ GalleryPage } />
               <Route exact path='/:museumId/:galleryId/:artId' component={ ArtPage } />

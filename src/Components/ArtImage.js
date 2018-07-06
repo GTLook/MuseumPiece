@@ -1,43 +1,45 @@
 import React, { Component } from 'react'
-import {Col, Row } from 'react-materialize'
-//import Camera from 'react-camera'
+import {Col, Row, Button } from 'react-materialize'
 import Webcam from 'react-webcam'
 
 import { connect } from 'react-redux'
 import { museumList } from '../actions'
 import { withAuthentication } from '../helpers'
 
-import MuseumCard from '../Components/MuseumCard'
-
 class ArtImage extends Component {
 
 constructor(props) {
     super(props)
     this.constraints = { width: 1280, height: 720, facingMode: "environment" }
-    this.state = {stream:null}
+    this.state = { stream:null, screenShot:null }
   }
-
 
   setRef = (webcam) => {
       this.webcam = webcam
     }
 
-    capture = () => {
-       const imageSrc = this.webcam.getScreenshot();
-     }
+  capture = () => {
+     this.state.screenShot = this.webcam.getScreenshot()
+   }
 
 render() {
   return (
       <div>
-        <Webcam
-          audio={false}
-          height={1280}
-          ref={this.setRef}
-          screenshotFormat="image/jpeg"
-          width={720}
-          videoConstraints={this.constraints}
-        />
-        <button onClick={this.capture}>Capture photo</button>
+        <Col>
+          <Row>
+            <Webcam
+              audio={false}
+              height={720}
+              ref={this.setRef}
+              screenshotFormat="image/jpeg"
+              width={720}
+              videoConstraints={this.constraints}
+              />
+          </Row>
+          <Row>
+            <Button waves='light' onClick={this.capture}>Capture Image</Button>
+          </Row>
+        </Col>
       </div>
     )
   }

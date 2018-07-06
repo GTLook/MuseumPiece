@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import {Col, Row, Parallax } from 'react-materialize'
-import { Link } from 'react-router-dom'
+import { Col, Row, Parallax } from 'react-materialize'
+import { Link, Redirect } from 'react-router-dom'
 
 import { connect } from 'react-redux'
 import { museumList } from '../actions'
@@ -12,9 +12,11 @@ class MuseumPage extends Component {
   constructor(props){
     super(props)
     this.museum = this.props.museumList.find(ele => ele.museum_name.replace(/\s+/g, '') === this.props.match.params.museumId)
+
   }
 
   render() {
+    if(!this.museum) return <Redirect to="/"/> 
     return(
       <div>
         <Parallax imageSrc={this.museum.museum_picture}/>
