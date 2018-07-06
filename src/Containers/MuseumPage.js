@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
 import {Col, Row, Parallax } from 'react-materialize'
+import { Link } from 'react-router-dom'
 
 import { connect } from 'react-redux'
 import { museumList } from '../actions'
 import { withAuthentication } from '../helpers'
 
-import HomeMuseumCard from '../Components/HomeMuseumCard'
+import GalleryCard from '../Components/GalleryCard'
 
 class MuseumPage extends Component {
   constructor(props){
@@ -23,7 +24,7 @@ class MuseumPage extends Component {
             <p className="grey-text text-darken-3 lighten-3"></p>
           </div>
         </div>
-        {this.props.museumList.map(museum => <HomeMuseumCard key={museum.museum_shortid} info={museum}/>)}
+        {this.museum.gallery.map(gallery => <GalleryCard key={gallery.gallery_shortid} path={this.props.location.pathname} gallery={gallery}/>)}
       </div>
     )
   }

@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { museumList } from '../actions'
 import { withAuthentication } from '../helpers'
 
-import HomeMuseumCard from '../Components/HomeMuseumCard'
+import MuseumCard from '../Components/MuseumCard'
 
 class Home extends Component {
   render() {
@@ -18,7 +18,8 @@ class Home extends Component {
             <p className="grey-text text-darken-3 lighten-3">Museum Piece is a web app reality augementation tool focused on bringing the information of your favorite art right to your phone or tablet.</p>
           </div>
         </div>
-        {this.props.museumList.map(museum => <HomeMuseumCard key={museum.museum_shortid} info={museum}/>)}
+        {this.props.museumList.map(museum => <MuseumCard key={museum.museum_shortid} museum={museum}/>)
+          }
       </div>
     )
   }
