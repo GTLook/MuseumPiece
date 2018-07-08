@@ -4,6 +4,8 @@ import { request } from './helpers'
 export const GET_USER = 'GET_USER'
 export const GET_AUTH = 'GET_AUTH'
 export const GET_ALL_MUSEUMS = 'GET_ALL_MUSEUMS'
+export const GET_ALL_GALLERIES = 'GET_ALL_GALLERIES'
+
 export const POST_GOOGLE_API = 'POST_GOOGLE_API'
 //export const GET_ALL_USERS = 'GET_ALL_USERS'
 
@@ -16,6 +18,18 @@ export const getAllMuseums = () => (
     .then((response) => {
       dispatch({
         type: GET_ALL_MUSEUMS,
+        payload: response.data.data
+      })
+    })
+  }
+)
+
+export const getAllGalleries = (museumId) => (
+  dispatch => {
+    axios.get(`${API}/api/museum/${museumId}/gallery`)
+    .then((response) => {
+      dispatch({
+        type: GET_ALL_GALLERIES,
         payload: response.data.data
       })
     })

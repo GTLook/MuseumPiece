@@ -1,14 +1,16 @@
 import React from 'react'
-import { Col, Row, Card, CardTitle } from 'react-materialize'
+import { Card, CardTitle } from 'react-materialize'
 import { Link } from 'react-router-dom'
 
 
 const MuseumCard = ({museum}) => (
-  <Card horizontal header={<CardTitle image={museum.museum_picture}></CardTitle>} actions={[<a href='#'>Explore Galleries</a>]}>
+  <div>
     <Link to={`${museum.museum_name.replace(/\s+/g, '')}`}>
-      <h5>{museum.museum_name}</h5>
+      <Card horizontal header={<CardTitle image={museum.museum_picture}></CardTitle>} actions={[<a >Explore Galleries</a>]}>
+        <h4>{museum.museum_name}</h4>
+      </Card>
     </Link>
-  </Card>
+  </div>
 )
 
 export default MuseumCard

@@ -4,14 +4,15 @@ import { Link } from 'react-router-dom'
 
 
 const GalleryCard = ({gallery, path}) => (
-  <Card header={<CardTitle reveal image={gallery.gallery_picture} waves='light'/>}
-    title={gallery.gallery_title}
-    reveal={<p>{gallery.gallery_text}</p>}>
+  <div>
     <Link to={`${path}/${gallery.gallery_title.replace(/\s+/g, '')}`}>
-      <p>Link here</p>
+      <Card header={<CardTitle reveal image={gallery.gallery_picture} waves='light'/>}
+        title={gallery.gallery_title}
+        reveal={<p>{gallery.gallery_text}</p>}>
+          <p>Link here</p>
+      </Card>
     </Link>
-  </Card>
-
+  </div>
 )
 
 export default GalleryCard

@@ -1,9 +1,8 @@
-import React, {Component} from 'react'
-import {connect} from 'react-redux'
-import {bindActionCreators} from 'redux'
-import {BrowserRouter, Switch, Route} from 'react-router-dom'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { BrowserRouter, Switch, Route } from 'react-router-dom'
 
-import {getAllMuseums} from '../actions'
 import { request, AuthenticationService } from '../helpers'
 
 import Footer  from '../Components/Footer'
@@ -11,26 +10,12 @@ import Home from './Home'
 import MuseumPage from './MuseumPage'
 import GalleryPage from './GalleryPage'
 import ArtPage from './ArtPage'
-import ArtImage from '../Components/ArtImage'
+// import ArtImage from '../Components/ArtImage'
 
 //CSS
 import '../css/App.css';
 
 class App extends Component {
-
-  componentDidMount(){
-    this.props.getAllMuseums()
-    // request('/auth/token')
-    //   .then(response => {
-    //     AuthenticationService.setAuthState(response.data)
-    //     return request('/users')
-    //   })
-    //   .then(response => {
-    //     const authState = AuthenticationService.getAuthState()
-    //     const activeUser = response.data.data.find(el => el.id === authState.id)
-    //     AuthenticationService.setAuthState(activeUser)
-    //   })
-  }
 
   render(){
     return (
@@ -52,5 +37,5 @@ class App extends Component {
 }
 
 
-const mapDispatchToProps = dispatch => bindActionCreators({getAllMuseums}, dispatch)
+const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch)
 export default connect(null, mapDispatchToProps)(App)
