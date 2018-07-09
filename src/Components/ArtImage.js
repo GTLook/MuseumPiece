@@ -13,8 +13,11 @@ class ArtImage extends Component {
 constructor(props) {
     super(props)
     this.constraints = { width: 1280, height: 720, facingMode: "environment" }
-    this.state = { stream:null, screenShot:null }
-    this.imageString = ''
+    this.museum = this.props.museumList.find(ele => ele.museum_name.replace(/\s+/g, '') === this.props.match.params.museumId)
+    this.gallery = this.props.galleryList.find(ele => ele.gallery_title.replace(/\s+/g, '') === this.props.match.params.galleryId)
+    this.state = {
+      activeArt: ''
+    }
   }
 
   setRef = (webcam) => {
@@ -27,7 +30,10 @@ constructor(props) {
 
      axios.post(`https://vision.googleapis.com/v1/images:annotate?key=AIzaSyCE2FbLX-ehm5HcHhnx5WcsLgIrbUpXuoY`, googleJSONBody)
          .then((response) => {
-           console.log(response)
+           response.logoAnnotations.map(object => {
+              this.setState({activeArt: this.gallery.art.find(art => art.art_title == object.description)})
+           })
+
          })
          .catch((error) => console.log(`Vision API Error - ${error}`))
        }
@@ -42,8 +48,8 @@ constructor(props) {
           },
           "features":[
             {
-              "type":"LABEL_DETECTION",
-              "maxResults":1
+              "type":"LOGO_DETECTION",
+              "maxResults":10
             }
           ]
         }
@@ -75,7 +81,8 @@ render() {
         </Row>
         <Row>
           <Col>
-            <Button waves='light' onClick={this.capture}>Capture Image</Button>
+            <Button waves='light' onClick={this.capture}>Search Art Database.</Button>
+            <p>{this.state.activeArt}</p>
           </Col>
         </Row>
       </div>
