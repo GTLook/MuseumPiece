@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
 import {Col, Row, Button } from 'react-materialize'
 import Webcam from 'react-webcam'
-
+import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { museumList } from '../actions'
+import axios from 'axios'
+
+import { visionAPI } from '../actions'
 import { withAuthentication } from '../helpers'
 
 class ArtImage extends Component {
@@ -12,6 +14,7 @@ constructor(props) {
     super(props)
     this.constraints = { width: 1280, height: 720, facingMode: "environment" }
     this.state = { stream:null, screenShot:null }
+    this.imageString = ''
   }
 
   setRef = (webcam) => {
@@ -19,31 +22,62 @@ constructor(props) {
     }
 
   capture = () => {
-     this.state.screenShot = this.webcam.getScreenshot()
-   }
+     const img = this.webcam.getScreenshot()
+     const googleJSONBody = this.googleJSON(img)
+
+     axios.post(`https://vision.googleapis.com/v1/images:annotate?key=AIzaSyCE2FbLX-ehm5HcHhnx5WcsLgIrbUpXuoY`, googleJSONBody)
+         .then((response) => {
+           console.log(response)
+         })
+         .catch((error) => console.log(`Vision API Error - ${error}`))
+       }
+
+
+   googleJSON = (imageString) => (
+     {
+      "requests":[
+        {
+          "image":{
+            "content": imageString
+          },
+          "features":[
+            {
+              "type":"LABEL_DETECTION",
+              "maxResults":1
+            }
+          ]
+        }
+      ]
+    }
+  )
+
 
 render() {
+
   return (
       <div>
-        <Col>
-          <Row>
-            <Link to={`/${this.props.match.params.museumId}/${this.props.match.params.galleryId}`}>Back</Link>
-
-          </Row>
-          <Row>
+        <Row>
+          <Col>
+            <Link to={`/${this.props.match.params.museumId}/${this.props.match.params.galleryId} `}>Back</Link>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
             <Webcam
               audio={false}
-              height={720}
+              height={500}
+              width={500}
               ref={this.setRef}
-              screenshotFormat="image/jpeg"
-              width={720}
               videoConstraints={this.constraints}
+              screenshotFormat="image/jpeg"
               />
-          </Row>
-          <Row>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
             <Button waves='light' onClick={this.capture}>Capture Image</Button>
-          </Row>
-        </Col>
+          </Col>
+        </Row>
       </div>
     )
   }
@@ -75,5 +109,5 @@ render() {
 // }
 
 
-const mapStateToProps = ({museumList}) => ({museumList})
+const mapStateToProps = ({museumList, galleryList}) => ({museumList, galleryList})
 export default connect(mapStateToProps)(withAuthentication(ArtImage))

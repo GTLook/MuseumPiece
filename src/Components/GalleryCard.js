@@ -1,5 +1,5 @@
 import React from 'react'
-import { Col, Row, Card, CardTitle } from 'react-materialize'
+import { Col, Row, Card, CardTitle, Divider } from 'react-materialize'
 import { Link } from 'react-router-dom'
 
 
@@ -7,13 +7,22 @@ const GalleryCard = ({gallery, path}) => (
   <div>
     <Row>
       <Col>
-        <Link to={`${path}/${gallery.gallery_title.replace(/\s+/g, '')}`}>
-          <Card header={<CardTitle reveal image={gallery.gallery_picture} waves='light'/>}
-            title={gallery.gallery_title}
-            reveal={<p>{gallery.gallery_text}</p>}>
-            <p>Link here</p>
-          </Card>
-        </Link>
+        <Card className="hoverable" header={<CardTitle reveal image={gallery.gallery_picture} waves='light'/>}
+              title={gallery.gallery_title}
+              reveal={
+                <div>
+                  <Divider/>
+                  <p className="galleryText">{gallery.gallery_text}</p>
+
+                  <Link to={`${path}/${gallery.gallery_title.replace(/\s+/g, '')}`}>
+                    <p> View and search for art. </p>
+                  </Link>
+                </div>
+              }>
+          <Link to={`${path}/${gallery.gallery_title.replace(/\s+/g, '')}`}>
+            <p> View and search for art. </p>
+          </Link>
+        </Card>
       </Col>
     </Row>
   </div>

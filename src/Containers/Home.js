@@ -30,7 +30,7 @@ class Home extends Component {
       <div>
         <Row>
           <Parallax imageSrc="http://backgroundcheckall.com/wp-content/uploads/2017/12/museum-background-5.jpg"/>
-          <Col s={12} m={12} l={12} xl={12} s2={2} m2={2} l2={3} xl2={3}>
+          <Col s={12} m={12} l={12} xl={12} >
             <div className="section">
               <div className="row container">
                 <h2 className="header">Museum Piece</h2>
@@ -45,7 +45,7 @@ class Home extends Component {
               this.props.museumList.filter((ele, i) => i%2===0 ).map((museum) => {
                 return (
                   <Col key={museum.museum_shortid} s={12} m={12} l={6} xl={6} >
-                    <MuseumCard className='museumCard' museum={museum}  />
+                    <MuseumCard  museum={museum}  />
                   </Col>
                 )
               })

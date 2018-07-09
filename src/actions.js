@@ -5,12 +5,11 @@ export const GET_USER = 'GET_USER'
 export const GET_AUTH = 'GET_AUTH'
 export const GET_ALL_MUSEUMS = 'GET_ALL_MUSEUMS'
 export const GET_ALL_GALLERIES = 'GET_ALL_GALLERIES'
-
 export const POST_GOOGLE_API = 'POST_GOOGLE_API'
 //export const GET_ALL_USERS = 'GET_ALL_USERS'
 
 const API = `${process.env.REACT_APP_BACKEND}`
-const googleAPIkey = `${process.env.API_KEY}`
+const googleAPIkey = process.env.API_KEY
 
 export const getAllMuseums = () => (
   dispatch => {
@@ -60,13 +59,16 @@ export const getUser = () => (
   }
 )
 
-// export const visionAPI = () => (
+// export const visionAPI = (body) => (
 //   dispatch => {
-//     axios.post(`https://vision.googleapis.com/v1/images:annotate?key=${googleAPIkey}`)
+//     axios.post(`https://vision.googleapis.com/v1/images:annotate?key=${googleAPIkey}`, body)
 //     .then((response) => {
-//       type: POST_GOOGLE_API,
-//       payload: payload
+//       dispatch({
+//         type: POST_GOOGLE_API,
+//         payload: response.data
+//       })
 //     })
+//     .catch((error) => console.log(`Vision API Error - ${error}`))
 //   }
 // )
 

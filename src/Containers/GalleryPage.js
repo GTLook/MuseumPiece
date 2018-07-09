@@ -15,11 +15,17 @@ class GalleryPage extends Component {
     super(props)
     this.museum = this.props.museumList.find(ele => ele.museum_name.replace(/\s+/g, '') === this.props.match.params.museumId)
     this.gallery = this.props.galleryList.find(ele => ele.gallery_title.replace(/\s+/g, '') === this.props.match.params.galleryId)
+    this.state = {
+      activeArt: 0
+    }
   }
 
-    // componentDidMount(){
-    //   if(this.museum) this.props.getAllGalleries(this.museum.id)
-    // }
+  // componentDidMount() {
+  //   updateArt().then(response => {
+  //     this.setState({
+  //       posts: response.posts
+  //     });
+  //   });
 
   render() {
     if(!this.gallery) return <Redirect to="/"/>
@@ -27,10 +33,13 @@ class GalleryPage extends Component {
       <div>
         <Link to={`/${this.props.match.params.museumId}/${this.props.match.params.galleryId}/FindArt`}>Find Art</Link>
         <Row className='center'>
-          <Col s={8} m={8} l={6} xl={6} s2={2} m2={2} l2={2} xl2={2}>
-            <Collapsible  accordion defaultActiveKey={1}>
-              {this.gallery.art.map(art => <ArtCard art={art}/>)}
+          <Col s={12} m={12} l={6} xl={6}>
+            <Collapsible  accordion defaultActiveKey={0}>
+              {this.gallery.art.map(art => <ArtCard key={art.art_shortid} art={art}/>)}
             </Collapsible>
+          </Col>
+          <Col className="hide-on-med-and-down" s={0} m={0} l={6} xl={6}>
+            <img className="materialboxed" src={this.gallery.art[this.state.activeArt].art_picture_url}/>
           </Col>
         </Row>
       </div>
