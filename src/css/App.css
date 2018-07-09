@@ -36,6 +36,12 @@ div.card-content {
   padding: 0 0 0 10px;
 }
 
+.galleryCardInfo {
+  color: black;
+  padding: 20px 0 0 5px;
+  font-size: 20px;
+}
+
 .museumList {
   padding: 15px;
 }
@@ -44,6 +50,7 @@ div.card-content {
 
 .center {
   justify-content: center;
+  text-align: center;
 }
 
 /* footer css */

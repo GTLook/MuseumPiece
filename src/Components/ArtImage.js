@@ -27,6 +27,10 @@ render() {
       <div>
         <Col>
           <Row>
+            <Link to={`/${this.props.match.params.museumId}/${this.props.match.params.galleryId}`}>Back</Link>
+
+          </Row>
+          <Row>
             <Webcam
               audio={false}
               height={720}

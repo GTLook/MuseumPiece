@@ -23,18 +23,28 @@ class MuseumPage extends Component {
   render() {
     if(!this.museum) return <Redirect to="/"/>
     return(
-      <Row>
-        <Parallax imageSrc={this.museum.museum_picture}/>
-        <Col className="center"  s2={2} m2={2} l2={3} xl2={3}>
-          <div className="section">
-            <Row className="container">
-              <h2 className="header">{this.museum.museum_name}</h2>
-              <p className="grey-text text-darken-3 lighten-3"></p>
-            </Row>
-          </div>
-          {this.museum.gallery.map(gallery => <GalleryCard key={gallery.gallery_shortid} path={this.props.location.pathname} gallery={gallery}/>)}
-        </Col>
-      </Row>
+      <div>
+        <Row>
+          <Parallax imageSrc={this.museum.museum_picture}/>
+          <Col justify="center" s={8} m={8} l={8} xl={8} s2={2} m2={2} l2={2} xl2={2}>
+            <div className="section">
+              <Row className="container">
+                <h2 className="header">{`The ${this.museum.museum_name}`}</h2>
+                <Divider />
+                <p className="grey-text text-darken-3 lighten-3">list museum text here</p>
+              </Row>
+            </div>
+          </Col>
+        </Row>
+        <Row>
+          <Col className="center" s={8} m={8} l={6} xl={6} s2={2} m2={2} l2={2} xl2={2}>
+            {this.museum.gallery.map(gallery => {if(gallery.id%2 === 0) return <GalleryCard key={gallery.gallery_shortid} path={this.props.location.pathname} gallery={gallery}/>})}
+          </Col>
+          <Col s={8} m={8} l={6} xl={6} s2={2} m2={2} l2={2} xl2={2}>
+            {this.museum.gallery.map(gallery => {if(gallery.id%2 === 1) return <GalleryCard key={gallery.gallery_shortid} path={this.props.location.pathname} gallery={gallery}/>})}
+          </Col>
+        </Row>
+      </div>
     )
   }
 }

@@ -5,7 +5,7 @@ const Footer = () => (
 
 <section className='footer'>
   <Row >
-    <Col s={12}>
+    <Col className="center" s={12}>
       <div className='footer-block'></div>
       <p>2018 © MuseumPiece, Inc.</p>
     </Col>
