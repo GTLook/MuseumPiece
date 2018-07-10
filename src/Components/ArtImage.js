@@ -5,18 +5,17 @@ import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import axios from 'axios'
 
-import { visionAPI } from '../actions'
+//import { visionAPI } from '../actions'
 import { withAuthentication } from '../helpers'
 
 class ArtImage extends Component {
-
-constructor(props) {
+  constructor(props) {
     super(props)
     this.constraints = { width: 500, height: 500, facingMode: "environment" }
     this.museum = this.props.museumList.find(ele => ele.museum_name.replace(/\s+/g, '') === this.props.match.params.museumId)
     this.gallery = this.props.galleryList.find(ele => ele.gallery_title.replace(/\s+/g, '') === this.props.match.params.galleryId)
     this.state = {
-      activeArt: ''
+      activeArt: null
     }
   }
 
@@ -27,7 +26,6 @@ constructor(props) {
   capture = () => {
      const img = this.webcam.getScreenshot()
      const googleJSONBody = this.googleJSON(img)
-
      axios.post(`https://vision.googleapis.com/v1/images:annotate?key=AIzaSyCE2FbLX-ehm5HcHhnx5WcsLgIrbUpXuoY`, googleJSONBody)
          .then((response) => {
            response.data.responses[0].logoAnnotations.forEach(data => {
@@ -37,7 +35,6 @@ constructor(props) {
          })
          .catch((error) => console.log(`Vision API Error - ${error}`))
        }
-
 
    googleJSON = (imageString) => (
      {
@@ -56,7 +53,6 @@ constructor(props) {
       ]
     }
   )
-
 
 render() {
   return (
@@ -81,7 +77,7 @@ render() {
         <Row>
           <Col>
             <Button waves='light' onClick={this.capture}>Search Art Database.</Button>
-            <p>{`${this.state.activeArt.art_title} text here`}</p>
+            <p>{`${this.state.activeArt.art_title}`}</p>
           </Col>
         </Row>
       </div>
