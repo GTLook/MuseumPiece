@@ -21,9 +21,9 @@ class GalleryPage extends Component {
     }
   }
 
-    setActiveArt(int){
-      if(this.state.activeArt != int) this.setState({activeArt: int})
-    }
+  setActiveArt(int){
+    this.setState({activeArt: int})
+  }
 
     // componentDidMount(){
     //   if(!this.museum) this.props.getAllMuseums()
@@ -37,7 +37,7 @@ class GalleryPage extends Component {
     return(
       <div>
         <Row>
-          <Col s={12} m={12} l={6} xl={6}>
+          <Col className="hide-on-small-only" l={6} xl={6}>
             <Collapsible defaultActiveKey={this.state.activeArt} accordion>
               {
                 this.gallery.art.map((art, i) => {
@@ -46,6 +46,7 @@ class GalleryPage extends Component {
                       <div >
                         <Divider/>
                         <p>{art.art_text}</p>
+                        <Divider/>
                       </div>
                     </CollapsibleItem>
                   )
@@ -53,17 +54,44 @@ class GalleryPage extends Component {
               }
             </Collapsible>
           </Col>
-          <Col className="hide-on-med-and-down" s={0} m={0} l={6} xl={6}>
-            <Tabs className='tab-demo z-depth-1'>
+          <Col className="hide-on-small-only" l={6} xl={6}>
+            <Tabs className='z-depth-1'>
               <Tab title="Gallery Image" active>
                 <img className="materialboxed responsive-img" src={this.gallery.art[this.state.activeArt].art_picture_url}/>
               </Tab>
               <Tab title="Image Search" >
-                <ArtImage museum={this.museum} gallery={this.gallery}/>
+                <ArtImage museum={this.museum} gallery={this.gallery} />
               </Tab>
               <Tab title="Audio">Test 3</Tab>
             </Tabs>
-
+          </Col>
+          <Col className="hide-on-med-and-up" >
+            <Tabs className='z-depth-1'>
+              <Tab title="Gallery List" active>
+                <Collapsible defaultActiveKey={this.state.activeArt} accordion>
+                  {
+                    this.gallery.art.map((art, i) => {
+                      return (
+                        <CollapsibleItem key={art.art_shortid} onClick={() => this.setActiveArt(i)} header={art.art_title} icon=''>
+                          <div >
+                            <Divider/>
+                            <p>{art.art_text}</p>
+                            <Divider/>
+                          </div>
+                        </CollapsibleItem>
+                      )
+                    })
+                  }
+                </Collapsible>
+              </Tab>
+              <Tab title="Art Image">
+                <img className="materialboxed responsive-img" src={this.gallery.art[this.state.activeArt].art_picture_url}/>
+              </Tab>
+              <Tab title="Image Search" >
+                <ArtImage museum={this.museum} gallery={this.gallery} />
+              </Tab>
+              <Tab title="Audio">Test 3</Tab>
+            </Tabs>
           </Col>
         </Row>
       </div>
