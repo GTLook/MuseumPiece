@@ -5,9 +5,7 @@ import { Link } from 'react-router-dom'
 
 const ArtCard = ({art}) => (
     <CollapsibleItem header={art.art_title} icon=''>
-      {console.log(art)}
-      <div className='artCard'>
-          <p>{art.art_flavor}</p>
+      <div >
           <Divider/>
           <p>{art.art_text}</p>
       </div>

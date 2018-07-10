@@ -40,7 +40,7 @@ class Home extends Component {
             </div>
           </Col>
         </Row>
-        <Row className="museumList">
+        <Row>
             {
               this.props.museumList.filter((ele, i) => i%2===0 ).map((museum) => {
                 return (

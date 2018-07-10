@@ -15,12 +15,12 @@ const GalleryCard = ({gallery, path}) => (
                   <p className="galleryText">{gallery.gallery_text}</p>
 
                   <Link to={`${path}/${gallery.gallery_title.replace(/\s+/g, '')}`}>
-                    <p> View and search for art. </p>
+                    <p> Explore the art in this gallery. </p>
                   </Link>
                 </div>
               }>
           <Link to={`${path}/${gallery.gallery_title.replace(/\s+/g, '')}`}>
-            <p> View and search for art. </p>
+            <p> Explore the art in this gallery. </p>
           </Link>
         </Card>
       </Col>

@@ -12,10 +12,10 @@ class ArtImage extends Component {
   constructor(props) {
     super(props)
     this.constraints = { width: 500, height: 500, facingMode: "environment" }
-    this.museum = this.props.museumList.find(ele => ele.museum_name.replace(/\s+/g, '') === this.props.match.params.museumId)
-    this.gallery = this.props.galleryList.find(ele => ele.gallery_title.replace(/\s+/g, '') === this.props.match.params.galleryId)
+    // this.museum = this.props.museumList.find(ele => ele.museum_name.replace(/\s+/g, '') === this.props.match.params.museumId)
+    // this.gallery = this.props.galleryList.find(ele => ele.gallery_title.replace(/\s+/g, '') === this.props.match.params.galleryId)
     this.state = {
-      activeArt: null
+      activeArtObj: {}
     }
   }
 
@@ -28,10 +28,14 @@ class ArtImage extends Component {
      const googleJSONBody = this.googleJSON(img)
      axios.post(`https://vision.googleapis.com/v1/images:annotate?key=AIzaSyCE2FbLX-ehm5HcHhnx5WcsLgIrbUpXuoY`, googleJSONBody)
          .then((response) => {
-           response.data.responses[0].logoAnnotations.forEach(data => {
-             const findMatch = this.gallery.art.find(art => art.art_title == data.description)
-              return findMatch ? this.setState({activeArt: findMatch}) : null
-           })
+            this.gallery.art.forEach((art, i) => {
+              const findMatch = response.data.responses[0].logoAnnotations.find(logo => logo.description == art.art_title)
+              findMatch ? this.setState({activeArt: i}) : null
+            })
+           // response.data.responses[0].logoAnnotations.forEach(data => {
+           //   const findMatch = this.gallery.art.find(art => art.art_title == data.description)
+           //    findMatch ? this.setState({activeArt: findMatch}) : null
+           // })
          })
          .catch((error) => console.log(`Vision API Error - ${error}`))
        }
@@ -59,11 +63,6 @@ render() {
       <div>
         <Row>
           <Col>
-            <Link to={`/${this.props.match.params.museumId}/${this.props.match.params.galleryId} `}>Back</Link>
-          </Col>
-        </Row>
-        <Row>
-          <Col>
             <Webcam
               audio={false}
               height={500}
@@ -77,7 +76,6 @@ render() {
         <Row>
           <Col>
             <Button waves='light' onClick={this.capture}>Search Art Database.</Button>
-            <p>{`${this.state.activeArt.art_title}`}</p>
           </Col>
         </Row>
       </div>

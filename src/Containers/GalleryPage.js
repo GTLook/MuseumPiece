@@ -1,13 +1,14 @@
 import React, { Component } from 'react'
-import {Col, Row, Collapsible, CollapsibleItem } from 'react-materialize'
+import {Col, Row, Collapsible, CollapsibleItem, Divider, Tabs, Tab} from 'react-materialize'
 import { Link, Redirect } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
-import { getAllGalleries } from '../actions'
+import { getAllMuseums, getAllGalleries } from '../actions'
 import { withAuthentication } from '../helpers'
 
 import ArtCard from '../Components/ArtCard'
+import ArtImage from '../Components/ArtImage'
 
 class GalleryPage extends Component {
 
@@ -20,26 +21,49 @@ class GalleryPage extends Component {
     }
   }
 
-  // componentDidMount() {
-  //   updateArt().then(response => {
-  //     this.setState({
-  //       posts: response.posts
-  //     });
-  //   });
+    setActiveArt(int){
+      if(this.state.activeArt != int) this.setState({activeArt: int})
+    }
+
+    // componentDidMount(){
+    //   if(!this.museum) this.props.getAllMuseums()
+    //   if(this.museum && !this.gallery) this.props.getAllGalleries(this.museum.id)
+    // }
+  // <ArtCard activeArt={this.state.activeart} key={art.art_shortid} art={art}/>\
+// <Link to={`/${this.props.match.params.museumId}/${this.props.match.params.galleryId}/FindArt`}>Find Art</Link>
 
   render() {
     if(!this.gallery) return <Redirect to="/"/>
     return(
       <div>
-        <Link to={`/${this.props.match.params.museumId}/${this.props.match.params.galleryId}/FindArt`}>Find Art</Link>
-        <Row className='center'>
+        <Row>
           <Col s={12} m={12} l={6} xl={6}>
-            <Collapsible  accordion activeKey={0}>
-              {this.gallery.art.map(art => <ArtCard key={art.art_shortid} art={art}/>)}
+            <Collapsible defaultActiveKey={this.state.activeArt} accordion>
+              {
+                this.gallery.art.map((art, i) => {
+                  return (
+                    <CollapsibleItem key={art.art_shortid} onClick={() => this.setActiveArt(i)} header={art.art_title} icon=''>
+                      <div >
+                        <Divider/>
+                        <p>{art.art_text}</p>
+                      </div>
+                    </CollapsibleItem>
+                  )
+                })
+              }
             </Collapsible>
           </Col>
           <Col className="hide-on-med-and-down" s={0} m={0} l={6} xl={6}>
-            <img className="materialboxed" src={this.gallery.art[this.state.activeArt].art_picture_url}/>
+            <Tabs className='tab-demo z-depth-1'>
+              <Tab title="Gallery Image" active>
+                <img className="materialboxed responsive-img" src={this.gallery.art[this.state.activeArt].art_picture_url}/>
+              </Tab>
+              <Tab title="Image Search" >
+                <ArtImage museum={this.museum} gallery={this.gallery}/>
+              </Tab>
+              <Tab title="Audio">Test 3</Tab>
+            </Tabs>
+
           </Col>
         </Row>
       </div>
