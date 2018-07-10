@@ -93,6 +93,7 @@ class GalleryPage extends Component {
               <Tab title="Audio">Test 3</Tab>
             </Tabs>
           </Col>
+          <p>The state is {this.state.activeArt}</p>
         </Row>
       </div>
     )
