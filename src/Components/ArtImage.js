@@ -12,7 +12,7 @@ class ArtImage extends Component {
 
 constructor(props) {
     super(props)
-    this.constraints = { width: 1280, height: 720, facingMode: "environment" }
+    this.constraints = { width: 500, height: 500, facingMode: "environment" }
     this.museum = this.props.museumList.find(ele => ele.museum_name.replace(/\s+/g, '') === this.props.match.params.museumId)
     this.gallery = this.props.galleryList.find(ele => ele.gallery_title.replace(/\s+/g, '') === this.props.match.params.galleryId)
     this.state = {
@@ -44,7 +44,7 @@ constructor(props) {
       "requests":[
         {
           "image":{
-            "content": imageString
+            "content": imageString.split(',')[1]
           },
           "features":[
             {
@@ -88,31 +88,6 @@ render() {
     )
   }
 }
-//
-// const style = {
-//   preview: {
-//     position: 'relative',
-//   },
-//   captureContainer: {
-//     display: 'flex',
-//     position: 'absolute',
-//     justifyContent: 'center',
-//     zIndex: 1,
-//     bottom: 0,
-//     width: '100%'
-//   },
-//   captureButton: {
-//     backgroundColor: '#fff',
-//     borderRadius: '50%',
-//     height: 56,
-//     width: 56,
-//     color: '#000',
-//     margin: 20
-//   },
-//   captureImage: {
-//     width: '100%',
-//   }
-// }
 
 
 const mapStateToProps = ({museumList, galleryList}) => ({museumList, galleryList})

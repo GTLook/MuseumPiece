@@ -45,7 +45,7 @@ class Home extends Component {
               this.props.museumList.filter((ele, i) => i%2===0 ).map((museum) => {
                 return (
                   <Col key={museum.museum_shortid} s={12} m={12} l={6} xl={6} >
-                    <MuseumCard  museum={museum}  />
+                    <MuseumCard museum={museum}  />
                   </Col>
                 )
               })
@@ -54,7 +54,7 @@ class Home extends Component {
               this.props.museumList.filter((ele, i) => i%2===1 ).map((museum) => {
                 return (
                   <Col key={museum.museum_shortid} s={12} m={12} l={6} xl={6} >
-                    <MuseumCard className='museumCard' museum={museum} />
+                    <MuseumCard museum={museum} />
                   </Col>
                 )
               })
