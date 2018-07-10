@@ -30,10 +30,10 @@ constructor(props) {
 
      axios.post(`https://vision.googleapis.com/v1/images:annotate?key=AIzaSyCE2FbLX-ehm5HcHhnx5WcsLgIrbUpXuoY`, googleJSONBody)
          .then((response) => {
-           response.logoAnnotations.map(object => {
-              this.setState({activeArt: this.gallery.art.find(art => art.art_title == object.description)})
+           response.data.responses[0].logoAnnotations.forEach(data => {
+             const findMatch = this.gallery.art.find(art => art.art_title == data.description)
+              return findMatch ? this.setState({activeArt: findMatch}) : null
            })
-
          })
          .catch((error) => console.log(`Vision API Error - ${error}`))
        }
@@ -59,7 +59,6 @@ constructor(props) {
 
 
 render() {
-
   return (
       <div>
         <Row>
@@ -82,7 +81,7 @@ render() {
         <Row>
           <Col>
             <Button waves='light' onClick={this.capture}>Search Art Database.</Button>
-            <p>{this.state.activeArt}</p>
+            <p>{`${this.state.activeArt.art_title} text here`}</p>
           </Col>
         </Row>
       </div>

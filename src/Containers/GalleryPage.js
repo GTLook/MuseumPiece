@@ -34,7 +34,7 @@ class GalleryPage extends Component {
         <Link to={`/${this.props.match.params.museumId}/${this.props.match.params.galleryId}/FindArt`}>Find Art</Link>
         <Row className='center'>
           <Col s={12} m={12} l={6} xl={6}>
-            <Collapsible  accordion defaultActiveKey={0}>
+            <Collapsible  accordion activeKey={0}>
               {this.gallery.art.map(art => <ArtCard key={art.art_shortid} art={art}/>)}
             </Collapsible>
           </Col>

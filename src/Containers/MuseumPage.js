@@ -24,6 +24,7 @@ class MuseumPage extends Component {
     if(!this.museum) return <Redirect to="/"/>
     return(
       <div>
+        {console.log(this.props)}
         <Row>
           <Parallax imageSrc={this.museum.museum_picture}/>
           <Col s={12} m={12} l={12} xl={12} s2={2} m2={2} l2={2} xl2={2}>
