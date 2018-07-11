@@ -12,11 +12,8 @@ class ArtImage extends Component {
   constructor(props) {
     super(props)
     this.constraints = { width: 500, height: 500, facingMode: "environment" }
-    // this.museum = this.props.museumList.find(ele => ele.museum_name.replace(/\s+/g, '') === this.props.match.params.museumId)
-    // this.gallery = this.props.galleryList.find(ele => ele.gallery_title.replace(/\s+/g, '') === this.props.match.params.galleryId)
-    // this.state = {
-    //   activeArtObj: {}
-    // }
+    this.museum = this.props.museum
+    this.gallery = this.props.gallery
   }
 
   setRef = (webcam) => {
@@ -28,20 +25,11 @@ class ArtImage extends Component {
      const googleJSONBody = this.googleJSON(img)
      axios.post(`https://vision.googleapis.com/v1/images:annotate?key=AIzaSyCE2FbLX-ehm5HcHhnx5WcsLgIrbUpXuoY`, googleJSONBody)
          .then((response) => {
-            this.gallery.art.forEach((art, i) => {
+            this.gallery.art.forEach(art => {
               const findMatch = response.data.responses[0].logoAnnotations.find(logo => logo.description == art.art_title)
-              findMatch ? this.setState({activeArt: i}) : null
+              findMatch ? this.props.setActiveArt(art) : null
             })
-
-              // findMatch ? this.setState({activeArt: i}) : null
-
-
           })
-
-           // response.data.responses[0].logoAnnotations.forEach(data => {
-           //   const findMatch = this.gallery.art.find(art => art.art_title == data.description)
-           //    findMatch ? this.setState({activeArt: findMatch}) : null
-           // })
          .catch((error) => console.log(`Vision API Error - ${error}`))
        }
 
@@ -66,23 +54,15 @@ class ArtImage extends Component {
 render() {
   return (
       <div>
-        <Row>
-          <Col>
-            <Webcam
-              audio={false}
-              height={500}
-              width={500}
-              ref={this.setRef}
-              videoConstraints={this.constraints}
-              screenshotFormat="image/jpeg"
-              />
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            <Button waves='light' onClick={this.capture}>Search Art Database.</Button>
-          </Col>
-        </Row>
+        <Webcam
+          audio={false}
+          height={500}
+          width={500}
+          ref={this.setRef}
+          videoConstraints={this.constraints}
+          screenshotFormat="image/jpeg"
+          />
+        <Button waves='light' onClick={this.capture}>Search Art Database.</Button>
       </div>
     )
   }
