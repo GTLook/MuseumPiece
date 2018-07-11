@@ -14,9 +14,9 @@ class ArtImage extends Component {
     this.constraints = { width: 500, height: 500, facingMode: "environment" }
     // this.museum = this.props.museumList.find(ele => ele.museum_name.replace(/\s+/g, '') === this.props.match.params.museumId)
     // this.gallery = this.props.galleryList.find(ele => ele.gallery_title.replace(/\s+/g, '') === this.props.match.params.galleryId)
-    this.state = {
-      activeArtObj: {}
-    }
+    // this.state = {
+    //   activeArtObj: {}
+    // }
   }
 
   setRef = (webcam) => {
@@ -32,11 +32,16 @@ class ArtImage extends Component {
               const findMatch = response.data.responses[0].logoAnnotations.find(logo => logo.description == art.art_title)
               findMatch ? this.setState({activeArt: i}) : null
             })
+
+              // findMatch ? this.setState({activeArt: i}) : null
+
+
+          })
+
            // response.data.responses[0].logoAnnotations.forEach(data => {
            //   const findMatch = this.gallery.art.find(art => art.art_title == data.description)
            //    findMatch ? this.setState({activeArt: findMatch}) : null
            // })
-         })
          .catch((error) => console.log(`Vision API Error - ${error}`))
        }
 
