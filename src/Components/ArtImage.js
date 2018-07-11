@@ -11,7 +11,7 @@ import { withAuthentication } from '../helpers'
 class ArtImage extends Component {
   constructor(props) {
     super(props)
-    this.constraints = { width: 500, height: 500, facingMode: "environment" }
+    this.constraints = { width: 400, height: 400, facingMode: "environment" }
     this.museum = this.props.museum
     this.gallery = this.props.gallery
   }
@@ -56,8 +56,8 @@ render() {
       <div>
         <Webcam
           audio={false}
-          height={500}
-          width={500}
+          height={400}
+          width={400}
           ref={this.setRef}
           videoConstraints={this.constraints}
           screenshotFormat="image/jpeg"

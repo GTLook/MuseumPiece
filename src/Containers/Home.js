@@ -2,6 +2,9 @@ import React, { Component } from 'react'
 import { Col, Row, Parallax, Divider } from 'react-materialize'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import { Swipeable } from 'react-touch'
+import { Link } from 'react-router-dom'
+// import { HashLink as Link } from 'react-router-hash-link'
 
 import { museumList } from '../actions'
 import { withAuthentication } from '../helpers'
@@ -30,7 +33,7 @@ class Home extends Component {
       <div>
         <Row>
           <Parallax imageSrc="http://backgroundcheckall.com/wp-content/uploads/2017/12/museum-background-5.jpg"/>
-          <Col s={12} m={12} l={12} xl={12} >
+          <Col s={12} m={12} l={10} xl={10} >
             <div className="section">
               <div className="row container">
                 <h2 className="header">Museum Piece</h2>
@@ -45,7 +48,11 @@ class Home extends Component {
               this.props.museumList.filter((ele, i) => i%2===0 ).map((museum) => {
                 return (
                   <Col key={museum.museum_shortid} s={12} m={12} l={6} xl={6} >
-                    <MuseumCard museum={museum}  />
+                    <Swipeable onSwipeLeft={ () => this.props.history.push(`${museum.museum_name.replace(/\s+/g, '')}`) }>
+                      <Link to={`${museum.museum_name.replace(/\s+/g, '')}`}>
+                        <MuseumCard museum={museum}/>
+                      </Link>
+                    </Swipeable>
                   </Col>
                 )
               })
@@ -54,7 +61,11 @@ class Home extends Component {
               this.props.museumList.filter((ele, i) => i%2===1 ).map((museum) => {
                 return (
                   <Col key={museum.museum_shortid} s={12} m={12} l={6} xl={6} >
-                    <MuseumCard museum={museum} />
+                    <Swipeable onSwipeLeft={ () => this.props.history.push(`${museum.museum_name.replace(/\s+/g, '')}`) }>
+                      <Link to={`${museum.museum_name.replace(/\s+/g, '')}`}>
+                        <MuseumCard museum={museum}/>
+                      </Link>
+                    </Swipeable>
                   </Col>
                 )
               })

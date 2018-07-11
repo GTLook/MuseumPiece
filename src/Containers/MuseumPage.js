@@ -3,6 +3,7 @@ import { Col, Row, Parallax, Divider } from 'react-materialize'
 import { Link, Redirect } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import { Swipeable } from 'react-touch'
 
 import { getAllGalleries } from '../actions'
 import { withAuthentication } from '../helpers'
@@ -23,6 +24,7 @@ class MuseumPage extends Component {
   render() {
     if(!this.museum) return <Redirect to="/"/>
     return(
+      // <Swipeable onSwipeRight={ () => this.props.history.push(`/`) }>
       <div>
         <Row>
           <Parallax imageSrc={this.museum.museum_picture}/>
@@ -37,14 +39,23 @@ class MuseumPage extends Component {
           </Col>
         </Row>
         <Row className='museumCard'>
-          <Col className="museumCardCol" s={12} m={12} l={6} xl={6} s2={2} m2={2} l2={2} xl2={2}>
-            {this.museum.gallery.map(gallery => {if(gallery.id%2 === 0) return <GalleryCard key={gallery.gallery_shortid} path={this.props.location.pathname} gallery={gallery}/>})}
+          <Col className="museumCardCol" s={12} m={12} l={6} xl={6} >
+            {this.museum.gallery.map(gallery => {if(gallery.id%2 === 0) return (
+              <Swipeable onSwipeLeft={ () => this.props.history.push(`${this.props.location.pathname}/${gallery.gallery_name.replace(/\s+/g, '')}`) }>
+                <GalleryCard key={gallery.gallery_shortid} path={this.props.location.pathname} gallery={gallery}/>
+              </Swipeable>
+            )})}
           </Col>
-          <Col className="museumCardCol" s={12} m={12} l={6} xl={6} s2={2} m2={2} l2={2} xl2={2}>
-            {this.museum.gallery.map(gallery => {if(gallery.id%2 === 1) return <GalleryCard key={gallery.gallery_shortid} path={this.props.location.pathname} gallery={gallery}/>})}
+          <Col className="museumCardCol" s={12} m={12} l={6} xl={6} >
+            {this.museum.gallery.map(gallery => {if(gallery.id%2 === 1) return (
+              <Swipeable onSwipeLeft={ () => this.props.history.push(`${this.props.location.pathname}/${gallery.gallery_name.replace(/\s+/g, '')}`) }>
+                <GalleryCard key={gallery.gallery_shortid} path={this.props.location.pathname} gallery={gallery}/>
+              </Swipeable>
+            )})}
           </Col>
         </Row>
-      </div>
+      </div>  
+      // </Swipeable>
     )
   }
 }

@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
-import {Col, Row, Collection, CollectionItem, Divider, Tabs, Tab} from 'react-materialize'
+import {Col, Row, Collection, CollectionItem, Divider, Tabs, Tab, Card, CardTitle} from 'react-materialize'
 import { Link, Redirect } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import { Swipeable } from 'react-touch'
 
 import { getAllMuseums, getAllGalleries } from '../actions'
 import { withAuthentication } from '../helpers'
@@ -17,90 +18,59 @@ class GalleryPage extends Component {
     this.museum = this.props.museumList.find(ele => ele.museum_name.replace(/\s+/g, '') === this.props.match.params.museumId)
     this.gallery = this.props.galleryList.find(ele => ele.gallery_title.replace(/\s+/g, '') === this.props.match.params.galleryId)
     this.state = {
-      activeArt: {}
+      activeArt: this.gallery ? this.gallery.art[0] : {}
     }
   }
 
   setActiveArt = (art) => {
     this.setState({activeArt: art})
-    // this.collapsibleInstance.open(int)
-    // Collapsible.forceUpdate()
   }
 
-  // <Col className="hide-on-med-and-up" >
-  //   <Tabs className='z-depth-1'>
-  //     <Tab title="Gallery List" active>
-  //       <Collection>
-  //         {
-  //           this.gallery.art.map(art => {
-  //             return (
-  //               <CollectionItem key={art.art_shortid} onClick={() => this.setActiveArt(art)} >
-  //                 <div >
-  //                   <Divider/>
-  //                   <p>{art.art_title}</p>
-  //                   <Divider/>
-  //                 </div>
-  //               </CollectionItem> )
-  //           })
-  //         }
-  //       </Collection>
-  //     </Tab>
-  //     <Tab title="Art Image">
-  //       <img className="materialboxed responsive-img" src={this.state.activeArt.art_picture_url}/>
-  //       <Divider/>
-  //       <p>{this.state.activeArt.art_flavor}</p>
-  //     </Tab>
-  //     <Tab title="Image Search" >
-  //       <ArtImage
-  //         className="responsive-img"
-  //         museum={this.museum}
-  //         gallery={this.gallery}
-  //         setActiveArt={this.setActiveArt}
-  //       />
-  //     </Tab>
-  //     <Tab title="Audio">
-  //       <p>Enable audio playing here</p>
-  //     </Tab>
-  //   </Tabs>
-  // </Col>
+  scrollActiveArt = (direction) => {
+    const index = this.gallery.art.findIndex(art => art.art_title == this.state.activeArt.art_title)
+      if(direction == "up") this.setActiveArt((index < this.gallery.art.length()) ? this.gallery.art[index+1] : this.gallery.art[0] )
+      if(direction == "down") this.setActiveArt((index > 0) ? this.gallery.art[index-1] : this.gallery.art[this.gallery.art.length()])
+  }
 
   render() {
-    console.log(this.state)
     if(!this.gallery) return <Redirect to="/"/>
     return(
-      <div>
+      <Swipeable
+        onSwipeRight={ () => this.props.history.push(`${this.museum.museum_title.replace(/\s+/g, '')}`)}
+        onSwipeUp={ () => this.scrollActiveArt("up")}
+        onSwipeDown={ () => this.scrollActiveArt("down")} >
         <Row>
-          <Col className="hide-on-small-only" m={6} l={6} xl={6}>
+          <Col className="" s={12} m={12} l={6} xl={6}>
             <Collection>
               {
                 this.gallery.art.map(art => {
                   return (
                     <CollectionItem key={art.art_shortid} onClick={() => this.setActiveArt(art)}>
-                      <div>
-                        <p>{art.art_title}</p>
-                      </div>
+                      <p>{art.art_title}</p>
                     </CollectionItem> )
-                })
-              }
-            </Collection>
-          </Col>
-          <Col className="hide-on-small-only" l={6} xl={6}>
-            <Tabs className='z-depth-1 swipeable'>
-              <Tab title="Gallery Image" active>
-                <img className="materialboxed responsive-img" src={this.state.activeArt.art_picture_url}/>
-                <Divider/>
-                <p>{this.state.activeArt.art_flavor}</p>
-              </Tab>
-              <Tab title="Image Search" >
-                <ArtImage museum={this.museum} gallery={this.gallery} setActiveArt={this.setActiveArt}/>
-              </Tab>
-              <Tab title="Audio">Test 3</Tab>
-            </Tabs>
-          </Col>
+                  })
+                }
+              </Collection>
+            </Col>
+            <Col className="" s={12} m={12} l={6} xl={6}>
+              <Tabs className='z-depth-1 swipeable'>
+                <Tab title="Art" active>
+                  <Card header={<CardTitle reveal image={this.state.activeArt.art_picture_url} waves='light'/>}
+                    title={this.state.activeArt.art_titile}
+                    reveal={<p>{this.state.activeArt.art_text}</p>}>
+                    <p>{this.state.activeArt.art_flavor}</p>
+                  </Card>
+                </Tab>
+                <Tab title="Search" >
+                  <ArtImage museum={this.museum} gallery={this.gallery} setActiveArt={this.setActiveArt}/>
+                </Tab>
+                <Tab title="Audio">Test 3</Tab>
+              </Tabs>
+            </Col>
 
           <p>The state is {this.state.activeArt.art_title}</p>
         </Row>
-      </div>
+      </Swipeable>
     )
   }
 }
