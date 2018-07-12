@@ -23,8 +23,9 @@ class MuseumPage extends Component {
 
   render() {
     if(!this.museum) return <Redirect to="/"/>
+    //
     return(
-      // <Swipeable onSwipeRight={ () => this.props.history.push(`/`) }>
+    <Swipeable onSwipeRight={() => this.props.history.push('/') }>
       <div>
         <Row>
           <Parallax imageSrc={this.museum.museum_picture}/>
@@ -33,29 +34,26 @@ class MuseumPage extends Component {
               <Row className="container">
                 <h2 className="header">{`The ${this.museum.museum_name}`}</h2>
                 <Divider />
-                <p className="grey-text text-darken-3 lighten-3 valign-wrapper">Explore the open galleries.</p>
+                <p className="grey-text text-darken-3 lighten-3 valign-wrapper text">Explore the open galleries.</p>
               </Row>
             </div>
           </Col>
         </Row>
-        <Row className='museumCard'>
-          <Col className="museumCardCol" s={12} m={12} l={6} xl={6} >
+
+        <Row>
+          <Col className="padcard" s={12} m={12} l={6} xl={6} >
             {this.museum.gallery.map(gallery => {if(gallery.id%2 === 0) return (
-              <Swipeable onSwipeLeft={ () => this.props.history.push(`${this.props.location.pathname}/${gallery.gallery_name.replace(/\s+/g, '')}`) }>
-                <GalleryCard key={gallery.gallery_shortid} path={this.props.location.pathname} gallery={gallery}/>
-              </Swipeable>
+              <GalleryCard key={gallery.gallery_shortid} props={this.props} path={this.props.location.pathname} gallery={gallery}/>
             )})}
           </Col>
           <Col className="museumCardCol" s={12} m={12} l={6} xl={6} >
             {this.museum.gallery.map(gallery => {if(gallery.id%2 === 1) return (
-              <Swipeable onSwipeLeft={ () => this.props.history.push(`${this.props.location.pathname}/${gallery.gallery_name.replace(/\s+/g, '')}`) }>
-                <GalleryCard key={gallery.gallery_shortid} path={this.props.location.pathname} gallery={gallery}/>
-              </Swipeable>
+              <GalleryCard key={gallery.gallery_shortid} props={this.props} path={this.props.location.pathname} gallery={gallery}/>
             )})}
           </Col>
         </Row>
-      </div>  
-      // </Swipeable>
+      </div>
+    </Swipeable>
     )
   }
 }

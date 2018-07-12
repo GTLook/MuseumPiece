@@ -21,6 +21,7 @@ class ArtImage extends Component {
     }
 
   capture = () => {
+
      const img = this.webcam.getScreenshot()
      const googleJSONBody = this.googleJSON(img)
      axios.post(`https://vision.googleapis.com/v1/images:annotate?key=AIzaSyCE2FbLX-ehm5HcHhnx5WcsLgIrbUpXuoY`, googleJSONBody)

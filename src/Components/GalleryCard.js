@@ -1,9 +1,10 @@
 import React from 'react'
-import {Card, CardTitle, Divider } from 'react-materialize'
+import { Card, CardTitle, Divider } from 'react-materialize'
 import { Link } from 'react-router-dom'
+import { Swipeable } from 'react-touch'
 
-
-const GalleryCard = ({gallery, path}) => (
+const GalleryCard = ({props, gallery, path}) => (
+    <Swipeable onSwipeLeft={ () => props.history.push(`${path}/${gallery.gallery_title.replace(/\s+/g, '')}`) }>
         <Card className="hoverable" header={<CardTitle reveal image={gallery.gallery_picture} waves='light'/>}
               title={gallery.gallery_title}
               reveal={
@@ -19,6 +20,7 @@ const GalleryCard = ({gallery, path}) => (
             <p> Explore the art in this gallery. </p>
           </Link>
         </Card>
+      </Swipeable>
 )
 
 export default GalleryCard

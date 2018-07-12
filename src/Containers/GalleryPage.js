@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {Col, Row, Collection, CollectionItem, Divider, Tabs, Tab, Card, CardTitle} from 'react-materialize'
+import { Col, Row, Collection, CollectionItem, Divider, Tabs, Tab, Card, CardTitle } from 'react-materialize'
 import { Link, Redirect } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
@@ -28,15 +28,16 @@ class GalleryPage extends Component {
 
   scrollActiveArt = (direction) => {
     const index = this.gallery.art.findIndex(art => art.art_title == this.state.activeArt.art_title)
-      if(direction == "up") this.setActiveArt((index < this.gallery.art.length()) ? this.gallery.art[index+1] : this.gallery.art[0] )
-      if(direction == "down") this.setActiveArt((index > 0) ? this.gallery.art[index-1] : this.gallery.art[this.gallery.art.length()])
+      if(direction === "right") return this.props.history.push(`${this.museum.museum_name.replace(/\s+/g, '')}`)
+      if(direction === "up") return this.setActiveArt((index < (this.gallery.art.length-1)) ? this.gallery.art[index+1] : this.gallery.art[0] )
+      if(direction === "down") return this.setActiveArt((index > 0) ? this.gallery.art[index-1] : this.gallery.art[this.gallery.art.length-1])
   }
 
   render() {
     if(!this.gallery) return <Redirect to="/"/>
     return(
       <Swipeable
-        onSwipeRight={ () => this.props.history.push(`${this.museum.museum_title.replace(/\s+/g, '')}`)}
+        onSwipeRight={() => this.props.history.goBack()}
         onSwipeUp={ () => this.scrollActiveArt("up")}
         onSwipeDown={ () => this.scrollActiveArt("down")} >
         <Row>
@@ -54,7 +55,7 @@ class GalleryPage extends Component {
             </Col>
             <Col className="" s={12} m={12} l={6} xl={6}>
               <Tabs className='z-depth-1 swipeable'>
-                <Tab title="Art" active>
+                <Tab title="Art">
                   <Card header={<CardTitle reveal image={this.state.activeArt.art_picture_url} waves='light'/>}
                     title={this.state.activeArt.art_titile}
                     reveal={<p>{this.state.activeArt.art_text}</p>}>
@@ -67,8 +68,6 @@ class GalleryPage extends Component {
                 <Tab title="Audio">Test 3</Tab>
               </Tabs>
             </Col>
-
-          <p>The state is {this.state.activeArt.art_title}</p>
         </Row>
       </Swipeable>
     )
