@@ -1,6 +1,6 @@
 import React from 'react'
-import { Col, Row, CollapsibleItem, Divider } from 'react-materialize'
-import { Link } from 'react-router-dom'
+import { CollapsibleItem, Divider } from 'react-materialize'
+// import { Link } from 'react-router-dom'
 
 
 const ArtCard = ({art}) => (

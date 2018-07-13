@@ -55,15 +55,23 @@ class ArtImage extends Component {
 render() {
   return (
       <div>
-        <Webcam
-          audio={false}
-          height={400}
-          width={400}
-          ref={this.setRef}
-          videoConstraints={this.constraints}
-          screenshotFormat="image/jpeg"
-          />
-        <Button waves='light' onClick={this.capture}>Search Art Database.</Button>
+        <Row>
+          <Col>
+            <Webcam
+              audio={false}
+              height={400}
+              width={400}
+              ref={this.setRef}
+              videoConstraints={this.constraints}
+              screenshotFormat="image/jpeg"
+              />
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <Button waves='light' onClick={this.capture}>Search Art Database.</Button>
+          </Col>
+        </Row>
       </div>
     )
   }

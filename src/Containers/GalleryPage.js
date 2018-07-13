@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
-import { Col, Row, Collection, CollectionItem, Divider, Tabs, Tab, Card, CardTitle } from 'react-materialize'
+import { Col, Row, Collection, CollectionItem, Divider, Tabs, Tab, Card, CardTitle, Button, Navbar, NavItem} from 'react-materialize'
 import { Link, Redirect } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { Swipeable } from 'react-touch'
+import ReactPlayer from 'react-player'
 
 import { getAllMuseums, getAllGalleries } from '../actions'
 import { withAuthentication } from '../helpers'
@@ -16,9 +17,26 @@ class GalleryPage extends Component {
   constructor(props){
     super(props)
     this.museum = this.props.museumList.find(ele => ele.museum_name.replace(/\s+/g, '') === this.props.match.params.museumId)
-    this.gallery = this.props.galleryList.find(ele => ele.gallery_title.replace(/\s+/g, '') === this.props.match.params.galleryId)
     this.state = {
-      activeArt: this.gallery ? this.gallery.art[0] : {}
+      activeArt: {},
+      gallery: { art: []},
+      searchForImage: false,
+      showArt: true,
+      audio: false
+    }
+  }
+
+  static getDerivedStateFromProps = (props, state) =>{
+    const gallery = props.galleryList.find(ele => ele.gallery_title.replace(/\s+/g, '') === props.match.params.galleryId)
+    // console.log(state)
+    if(state.activeArt.id){
+      return {...state }
+    }
+    if(gallery && gallery.art && gallery.art[0]){
+      return {...state, gallery, activeArt: gallery.art[0]}
+    }
+    else {
+      return {...state }
     }
   }
 
@@ -27,47 +45,58 @@ class GalleryPage extends Component {
   }
 
   scrollActiveArt = (direction) => {
-    const index = this.gallery.art.findIndex(art => art.art_title == this.state.activeArt.art_title)
-      if(direction === "right") return this.props.history.push(`${this.museum.museum_name.replace(/\s+/g, '')}`)
-      if(direction === "up") return this.setActiveArt((index < (this.gallery.art.length-1)) ? this.gallery.art[index+1] : this.gallery.art[0] )
-      if(direction === "down") return this.setActiveArt((index > 0) ? this.gallery.art[index-1] : this.gallery.art[this.gallery.art.length-1])
+    const index = this.state.gallery.art.findIndex(art => art.art_title == this.state.activeArt.art_title)
+      if(direction === "up") return this.setActiveArt((index < (this.state.gallery.art.length-1)) ? this.state.gallery.art[index+1] : this.state.gallery.art[0] )
+      if(direction === "down") return this.setActiveArt((index > 0) ? this.state.gallery.art[index-1] : this.state.gallery.art[this.state.gallery.art.length-1])
   }
 
   render() {
-    if(!this.gallery) return <Redirect to="/"/>
+    // this.gallery = this.props.galleryList.find(ele => ele.gallery_title.replace(/\s+/g, '') === this.props.match.params.galleryId) || {art:[]}
+    //
+    if(!this.state.gallery.art.length) return <Redirect to={`/${this.props.match.params.museumId}`}/>
     return(
       <Swipeable
         onSwipeRight={() => this.props.history.goBack()}
-        onSwipeUp={ () => this.scrollActiveArt("up")}
-        onSwipeDown={ () => this.scrollActiveArt("down")} >
+        onSwipeUp={() => this.scrollActiveArt("up")}
+        onSwipeDown={() => this.scrollActiveArt("down")} >
         <Row>
-          <Col className="" s={12} m={12} l={6} xl={6}>
+          <Navbar brand={this.state.gallery.gallery_title} right={true}>
+            <NavItem onClick={() => this.setState({ showArt: true, searchForImage:false, audio:false})}>Art</NavItem>
+            <NavItem onClick={() => this.setState({ showArt: false, searchForImage:true, audio:false})}>Find Art</NavItem>
+            <NavItem onClick={() => this.setState({ showArt: false, searchForImage:false, audio:true})}>Audio</NavItem>
+          </Navbar>
+          {!this.state.showArt ? null : (
+          <Col className="" s={12} m={12} l={3} xl={3}>
             <Collection>
               {
-                this.gallery.art.map(art => {
+                this.state.gallery.art.map(art => {
                   return (
-                    <CollectionItem key={art.art_shortid} onClick={() => this.setActiveArt(art)}>
+                    <CollectionItem active={(this.state.activeArt)?(this.state.activeArt.id===art.id):false} key={art.art_shortid} onClick={() => this.setActiveArt(art)}>
                       <p>{art.art_title}</p>
                     </CollectionItem> )
                   })
                 }
               </Collection>
             </Col>
-            <Col className="" s={12} m={12} l={6} xl={6}>
-              <Tabs className='z-depth-1 swipeable'>
-                <Tab title="Art">
-                  <Card header={<CardTitle reveal image={this.state.activeArt.art_picture_url} waves='light'/>}
-                    title={this.state.activeArt.art_titile}
-                    reveal={<p>{this.state.activeArt.art_text}</p>}>
-                    <p>{this.state.activeArt.art_flavor}</p>
-                  </Card>
-                </Tab>
-                <Tab title="Search" >
-                  <ArtImage museum={this.museum} gallery={this.gallery} setActiveArt={this.setActiveArt}/>
-                </Tab>
-                <Tab title="Audio">Test 3</Tab>
-              </Tabs>
-            </Col>
+            <Col className="" s={12} m={12} l={9} xl={9}>
+              <Card
+                header={ <CardTitle reveal image={this.state.activeArt.art_picture_url} waves='light' /> }
+                title={this.state.activeArt.art_title}
+                reveal={
+                  <div>
+                    <p className="galleryText">{`${this.state.activeArt.art_flavor}`}</p>
+                    <p className="galleryText">{`${this.state.gallery.gallery_title}`}</p>
+                    <Divider/>
+                    <p className="galleryText">{this.state.activeArt.art_flavor}</p>
+                    <Divider/>
+                    <p className="galleryText">{this.state.activeArt.art_text}</p>
+                  </div>
+                } >
+                  <p>{this.state.activeArt.art_flavor}</p>
+                </Card>
+              </Col>
+                    )
+            }
         </Row>
       </Swipeable>
     )

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Col, Row, Parallax, Divider } from 'react-materialize'
-import { Link, Redirect } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { Swipeable } from 'react-touch'
