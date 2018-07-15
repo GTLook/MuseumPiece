@@ -31,6 +31,9 @@ class ArtImage extends Component {
               findMatch ? this.props.setActiveArt(art) : null
             })
           })
+          .then(response => {
+            this.setState({ showArt: true, searchForImage:false, audio:false})
+          })
          .catch((error) => console.log(`Vision API Error - ${error}`))
        }
 

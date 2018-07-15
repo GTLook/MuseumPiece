@@ -66,37 +66,40 @@ class GalleryPage extends Component {
             <NavItem onClick={() => this.setState({ showArt: false, searchForImage:false, audio:true})}>Audio</NavItem>
           </Navbar>
           {!this.state.showArt ? null : (
-          <Col className="" s={12} m={12} l={3} xl={3}>
-            <Collection>
-              {
-                this.state.gallery.art.map(art => {
-                  return (
-                    <CollectionItem active={(this.state.activeArt)?(this.state.activeArt.id===art.id):false} key={art.art_shortid} onClick={() => this.setActiveArt(art)}>
-                      <p>{art.art_title}</p>
-                    </CollectionItem> )
-                  })
-                }
-              </Collection>
-            </Col>
-            <Col className="" s={12} m={12} l={9} xl={9}>
-              <Card
-                header={ <CardTitle reveal image={this.state.activeArt.art_picture_url} waves='light' /> }
-                title={this.state.activeArt.art_title}
-                reveal={
-                  <div>
-                    <p className="galleryText">{`${this.state.activeArt.art_flavor}`}</p>
-                    <p className="galleryText">{`${this.state.gallery.gallery_title}`}</p>
-                    <Divider/>
-                    <p className="galleryText">{this.state.activeArt.art_flavor}</p>
-                    <Divider/>
-                    <p className="galleryText">{this.state.activeArt.art_text}</p>
-                  </div>
-                } >
-                  <p>{this.state.activeArt.art_flavor}</p>
-                </Card>
+          <div>
+            <Col className="" s={12} m={12} l={3} xl={3}>
+              <Collection>
+                {
+                  this.state.gallery.art.map(art => {
+                    return (
+                      <CollectionItem active={(this.state.activeArt)?(this.state.activeArt.id===art.id):false} key={art.art_shortid} onClick={() => this.setActiveArt(art)}>
+                        <p>{art.art_title}</p>
+                      </CollectionItem> )
+                    })
+                  }
+                </Collection>
               </Col>
-                    )
-            }
+              <Col className="" s={12} m={12} l={9} xl={9}>
+                <Card
+                  header={ <CardTitle reveal image={this.state.activeArt.art_picture_url} waves='light' /> }
+                  title={this.state.activeArt.art_title}
+                  reveal={
+                    <div>
+                      <p className="galleryText">{`${this.state.activeArt.art_flavor}`}</p>
+                      <p className="galleryText">{`${this.state.gallery.gallery_title}`}</p>
+                      <Divider/>
+                      <p className="galleryText">{this.state.activeArt.art_flavor}</p>
+                      <Divider/>
+                      <p className="galleryText">{this.state.activeArt.art_text}</p>
+                    </div>
+                  }>
+                    <p>{this.state.activeArt.art_flavor}</p>
+                  </Card>
+                </Col>
+              </div>
+            )}
+            {!this.state.searchForImage ? null : (<ArtImage/>)}
+            {!this.state.audio ? null : (Audio)}
         </Row>
       </Swipeable>
     )
