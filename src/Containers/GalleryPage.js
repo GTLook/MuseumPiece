@@ -48,17 +48,24 @@ class GalleryPage extends Component {
     const index = this.state.gallery.art.findIndex(art => art.art_title == this.state.activeArt.art_title)
       if(direction === "up") return this.setActiveArt((index < (this.state.gallery.art.length-1)) ? this.state.gallery.art[index+1] : this.state.gallery.art[0] )
       if(direction === "down") return this.setActiveArt((index > 0) ? this.state.gallery.art[index-1] : this.state.gallery.art[this.state.gallery.art.length-1])
+      if(direction === "left") return this.setState({ showArt: false, searchForImage:true, audio:false})
   }
 
+  componentDidUpdate(prevProps, prevState) {
+  // Typical usage (don't forget to compare props):
+    if (prevState.activeArt !== this.state.activeArt) {
+    this.setState({ showArt: true, searchForImage:false, audio:false})
+  }
+}
+
   render() {
-    // this.gallery = this.props.galleryList.find(ele => ele.gallery_title.replace(/\s+/g, '') === this.props.match.params.galleryId) || {art:[]}
-    //
     if(!this.state.gallery.art.length) return <Redirect to={`/${this.props.match.params.museumId}`}/>
     return(
       <Swipeable
         onSwipeRight={() => this.props.history.goBack()}
         onSwipeUp={() => this.scrollActiveArt("up")}
-        onSwipeDown={() => this.scrollActiveArt("down")} >
+        onSwipeDown={() => this.scrollActiveArt("down")}
+        onSwipeLeft={() => this.scrollActiveArt("left")} >
         <Row>
           <Navbar brand={this.state.gallery.gallery_title} right={true}>
             <NavItem onClick={() => this.setState({ showArt: true, searchForImage:false, audio:false})}>Art</NavItem>
@@ -98,7 +105,7 @@ class GalleryPage extends Component {
                 </Col>
               </div>
             )}
-            {!this.state.searchForImage ? null : (<ArtImage/>)}
+            {!this.state.searchForImage ? null : (<ArtImage setActiveArt={this.setActiveArt} museum={this.museum} gallery={this.state.gallery}/>)}
             {!this.state.audio ? null : (Audio)}
         </Row>
       </Swipeable>

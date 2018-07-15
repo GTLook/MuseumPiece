@@ -21,7 +21,7 @@ class ArtImage extends Component {
     }
 
   capture = () => {
-
+    console.log(this.props)
      const img = this.webcam.getScreenshot()
      const googleJSONBody = this.googleJSON(img)
      axios.post(`https://vision.googleapis.com/v1/images:annotate?key=AIzaSyCE2FbLX-ehm5HcHhnx5WcsLgIrbUpXuoY`, googleJSONBody)
@@ -31,9 +31,6 @@ class ArtImage extends Component {
               findMatch ? this.props.setActiveArt(art) : null
             })
           })
-          .then(response => {
-            this.setState({ showArt: true, searchForImage:false, audio:false})
-          })
          .catch((error) => console.log(`Vision API Error - ${error}`))
        }
 
@@ -42,7 +39,7 @@ class ArtImage extends Component {
       "requests":[
         {
           "image":{
-            "content": imageString.split(',')[1]
+           "content": imageString.split(',')[1]
           },
           "features":[
             {
@@ -59,7 +56,7 @@ render() {
   return (
       <div>
         <Row>
-          <Col>
+          <Col s={8} m={8} l={8} xl={8}>
             <Webcam
               audio={false}
               height={400}
@@ -71,8 +68,9 @@ render() {
           </Col>
         </Row>
         <Row>
-          <Col>
+          <Col s={8} m={8} l={8} xl={8}>
             <Button waves='light' onClick={this.capture}>Search Art Database.</Button>
+
           </Col>
         </Row>
       </div>
