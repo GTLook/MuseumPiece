@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Col, Row, Collection, CollectionItem, Divider, Tabs, Tab, Card, CardTitle, Button, Navbar, NavItem} from 'react-materialize'
+import { Col, Row, Collection, CollectionItem, Divider, Tabs, Tab, Card, CardTitle, Button, Navbar, NavItem, Input} from 'react-materialize'
 import { Link, Redirect } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
@@ -22,7 +22,9 @@ class GalleryPage extends Component {
       gallery: { art: []},
       searchForImage: false,
       showArt: true,
-      audio: false
+      audio_playing: true,
+      audio_volume: 1,
+      audio_loop: false,
     }
   }
 
@@ -52,7 +54,6 @@ class GalleryPage extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-  // Typical usage (don't forget to compare props):
     if (prevState.activeArt !== this.state.activeArt) {
     this.setState({ showArt: true, searchForImage:false, audio:false})
   }
@@ -98,15 +99,31 @@ class GalleryPage extends Component {
                       <p className="galleryText">{this.state.activeArt.art_flavor}</p>
                       <Divider/>
                       <p className="galleryText">{this.state.activeArt.art_text}</p>
+                        {(this.state.audio_playing)? ( <ReactPlayer url={`${this.state.activeArt.art_audio}`}
+                                                                           playing={this.state.audio_playing}
+                                                                          loop={this.state.audio_loop}
+                                                                          volume={this.state.audio_volume} /> ) :null}
                     </div>
                   }>
-                    <p>{this.state.activeArt.art_flavor}</p>
+                    <div>
+                      <p>{this.state.activeArt.art_flavor}</p>
+                    </div>
                   </Card>
                 </Col>
               </div>
             )}
-            {!this.state.searchForImage ? null : (<ArtImage setActiveArt={this.setActiveArt} museum={this.museum} gallery={this.state.gallery}/>)}
-            {!this.state.audio ? null : (Audio)}
+            {!this.state.searchForImage ? null :
+              (
+                <ArtImage setActiveArt={this.setActiveArt}
+                          museum={this.museum}
+                          gallery={this.state.gallery}/>
+              )}
+            {!this.state.audio ? null : (
+              <Col>
+                <Input type='checkbox' value='green' label='Disable Audio' defaultChecked='checked' onChange={() => this.setState({audio_playing: (!this.state.audio_playing)}) } />
+                <Input type='checkbox' value='green' label='Enable Looping Audio' defaultChecked='checked' onChange={() => this.setState({audio_playing: (!this.state.audio_loop)}) } />
+              </Col>
+            )}
         </Row>
       </Swipeable>
     )
