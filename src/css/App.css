@@ -93,3 +93,8 @@ div.card-content {
 .divider{
   margin: 20px;
 }
+
+.audio {
+  width: 300px;
+  height: 54px;
+}

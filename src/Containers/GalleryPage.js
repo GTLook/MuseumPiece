@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Col, Row, Collection, CollectionItem, Divider, Tabs, Tab, Card, CardTitle, Button, Navbar, NavItem, Input} from 'react-materialize'
+import { Col, Row, Collection, CollectionItem, Divider, Tabs, Tab, Card, CardTitle, Button, Navbar, NavItem, Input, Breadrumb, MenuItem} from 'react-materialize'
 import { Link, Redirect } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
@@ -69,9 +69,14 @@ class GalleryPage extends Component {
         onSwipeLeft={() => this.scrollActiveArt("left")} >
         <Row>
           <Navbar brand={this.state.gallery.gallery_title} right={true}>
+
             <NavItem onClick={() => this.setState({ showArt: true, searchForImage:false, audio:false})}>Art</NavItem>
             <NavItem onClick={() => this.setState({ showArt: false, searchForImage:true, audio:false})}>Find Art</NavItem>
             <NavItem onClick={() => this.setState({ showArt: false, searchForImage:false, audio:true})}>Audio</NavItem>
+            <Divider />
+            <NavItem >Log In</NavItem>
+            <NavItem >New Account</NavItem>
+
           </Navbar>
           {!this.state.showArt ? null : (
           <div>
@@ -99,10 +104,14 @@ class GalleryPage extends Component {
                       <p className="galleryText">{this.state.activeArt.art_flavor}</p>
                       <Divider/>
                       <p className="galleryText">{this.state.activeArt.art_text}</p>
-                        {(this.state.audio_playing)? ( <ReactPlayer url={`${this.state.activeArt.art_audio}`}
-                                                                           playing={this.state.audio_playing}
-                                                                          loop={this.state.audio_loop}
-                                                                          volume={this.state.audio_volume} /> ) :null}
+                      <Divider/>
+                        {(this.state.audio_playing)? (
+                          <ReactPlayer url={`${this.state.activeArt.art_audio}`}
+                                        height={100}
+                                        controls={true}
+                                        playing={this.state.audio_playing}
+                                        loop={this.state.audio_loop}
+                                        volume={this.state.audio_volume} /> ):null}
                     </div>
                   }>
                     <div>
