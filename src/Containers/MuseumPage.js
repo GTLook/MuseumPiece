@@ -29,7 +29,7 @@ class MuseumPage extends Component {
       <div>
         <Row>
           <Navbar brand={this.museum?this.museum.museum_name:null} right={true}>
-            <NavItem ><i class="far fa-user"></i></NavItem>
+            <NavItem ><i className="far fa-user"></i></NavItem>
           </Navbar>
         </Row>
         <Row>

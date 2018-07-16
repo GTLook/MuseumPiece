@@ -20,7 +20,6 @@ class ArtImage extends Component {
     }
 
   capture = () => {
-    console.log(this.props)
      const img = this.webcam.getScreenshot()
      const googleJSONBody = this.googleJSON(img)
      axios.post(`https://vision.googleapis.com/v1/images:annotate?key=AIzaSyCE2FbLX-ehm5HcHhnx5WcsLgIrbUpXuoY`, googleJSONBody)
@@ -53,9 +52,9 @@ class ArtImage extends Component {
 
 render() {
   return (
-      <div>
-        <Row>
-          <Col s={8} m={8} l={8} xl={8}>
+      <div className="center-align">
+        <Row className="center-align">
+          <Col className="center-align" s={12} m={12} l={12} xl={12}>
             <Webcam
               audio={false}
               height={400}
@@ -66,8 +65,8 @@ render() {
               />
           </Col>
         </Row>
-        <Row>
-          <Col s={8} m={8} l={8} xl={8}>
+        <Row className="center-align">
+          <Col className="center-align" s={12} m={12} l={12} xl={12}>
             <Button waves='light' onClick={this.capture}>Search Art Database.</Button>
 
           </Col>

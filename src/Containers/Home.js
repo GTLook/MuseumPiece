@@ -33,7 +33,7 @@ class Home extends Component {
       <div>
         <Row>
           <Navbar brand={`Museum Piece`} right={true}>
-            <NavItem ><i class="far fa-user"></i></NavItem>
+            <NavItem ><i className="far fa-user"></i></NavItem>
           </Navbar>
         </Row>
         <Row>

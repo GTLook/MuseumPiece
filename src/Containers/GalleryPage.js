@@ -47,7 +47,7 @@ class GalleryPage extends Component {
   }
 
   scrollActiveArt = (direction) => {
-    const index = this.state.gallery.art.findIndex(art => art.art_title == this.state.activeArt.art_title)
+    const index = this.state.gallery.art.findIndex(art => art.art_title === this.state.activeArt.art_title)
       if(direction === "up") return this.setActiveArt((index < (this.state.gallery.art.length-1)) ? this.state.gallery.art[index+1] : this.state.gallery.art[0] )
       if(direction === "down") return this.setActiveArt((index > 0) ? this.state.gallery.art[index-1] : this.state.gallery.art[this.state.gallery.art.length-1])
       if(direction === "left") return this.setState({ showArt: false, searchForImage:true, audio:false})
@@ -69,11 +69,10 @@ class GalleryPage extends Component {
         onSwipeLeft={() => this.scrollActiveArt("left")} >
         <Row>
           <Navbar brand={this.state.gallery.gallery_title} right={true}>
-
             <NavItem onClick={() => this.setState({ showArt: true, searchForImage:false, audio:false})}>Art</NavItem>
             <NavItem onClick={() => this.setState({ showArt: false, searchForImage:true, audio:false})}>Search Art</NavItem>
             <NavItem onClick={() => this.setState({ showArt: false, searchForImage:false, audio:true})}>Audio</NavItem>
-            <NavItem ><i class="far fa-user"></i></NavItem>
+            <NavItem ><i className="far fa-user"></i></NavItem>
           </Navbar>
           <Col s={1} m={1} l={1} xl={1} > </Col>
           <Col s={10} m={10} l={10} xl={10}>
@@ -134,7 +133,7 @@ class GalleryPage extends Component {
                     </CollectionItem>
                     <CollectionItem>
                       -  The Looping Audio Tour is {`${this.state.audio_loop?"Enabled":"Disabled"}`}
-                      <Input type='checkbox' value='green' label='Enable Looping Audio' defaultChecked='checked' onChange={() => this.setState({audio_playing: (!this.state.audio_loop)}) } />
+                      <Input type='checkbox' value='green' label='Enable Looping Audio' defaultChecked='checked' onChange={() => this.setState({audio_loop: (!this.state.audio_loop)}) } />
                     </CollectionItem>
                   </Collection>
                 </Col>
