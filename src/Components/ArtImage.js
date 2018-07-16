@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import {Col, Row, Button } from 'react-materialize'
 import Webcam from 'react-webcam'
-import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import axios from 'axios'
 
@@ -27,7 +26,7 @@ class ArtImage extends Component {
      axios.post(`https://vision.googleapis.com/v1/images:annotate?key=AIzaSyCE2FbLX-ehm5HcHhnx5WcsLgIrbUpXuoY`, googleJSONBody)
          .then((response) => {
             this.gallery.art.forEach(art => {
-              const findMatch = response.data.responses[0].logoAnnotations.find(logo => logo.description == art.art_title)
+              const findMatch = response.data.responses[0].logoAnnotations.find(logo => logo.description === art.art_title)
               findMatch ? this.props.setActiveArt(art) : null
             })
           })

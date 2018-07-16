@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { Col, Row, Collection, CollectionItem, Divider, Tabs, Tab, Card, CardTitle, Button, Navbar, NavItem, Input, Breadrumb, MenuItem} from 'react-materialize'
-import { Link, Redirect } from 'react-router-dom'
+import { Col, Row, Collection, CollectionItem, Divider, Card, CardTitle, Navbar, NavItem, Input } from 'react-materialize'
+import { Redirect } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { Swipeable } from 'react-touch'
@@ -22,7 +22,7 @@ class GalleryPage extends Component {
       gallery: { art: []},
       searchForImage: false,
       showArt: true,
-      audio_playing: true,
+      audio_playing: false,
       audio_volume: 1,
       audio_loop: false,
     }
@@ -71,68 +71,75 @@ class GalleryPage extends Component {
           <Navbar brand={this.state.gallery.gallery_title} right={true}>
 
             <NavItem onClick={() => this.setState({ showArt: true, searchForImage:false, audio:false})}>Art</NavItem>
-            <NavItem onClick={() => this.setState({ showArt: false, searchForImage:true, audio:false})}>Find Art</NavItem>
+            <NavItem onClick={() => this.setState({ showArt: false, searchForImage:true, audio:false})}>Search Art</NavItem>
             <NavItem onClick={() => this.setState({ showArt: false, searchForImage:false, audio:true})}>Audio</NavItem>
-            <Divider />
-            <NavItem >Log In</NavItem>
-            <NavItem >New Account</NavItem>
-
+            <NavItem ><i class="far fa-user"></i></NavItem>
           </Navbar>
-          {!this.state.showArt ? null : (
-          <div>
-            <Col className="" s={12} m={12} l={3} xl={3}>
-              <Collection>
-                {
-                  this.state.gallery.art.map(art => {
-                    return (
-                      <CollectionItem active={(this.state.activeArt)?(this.state.activeArt.id===art.id):false} key={art.art_shortid} onClick={() => this.setActiveArt(art)}>
-                        <p>{art.art_title}</p>
-                      </CollectionItem> )
-                    })
-                  }
-                </Collection>
-              </Col>
-              <Col className="" s={12} m={12} l={9} xl={9}>
-                <Card
-                  header={ <CardTitle reveal image={this.state.activeArt.art_picture_url} waves='light' /> }
-                  title={this.state.activeArt.art_title}
-                  reveal={
-                    <div>
-                      <p className="galleryText">{`${this.state.activeArt.art_flavor}`}</p>
-                      <p className="galleryText">{`${this.state.gallery.gallery_title}`}</p>
-                      <Divider/>
-                      <p className="galleryText">{this.state.activeArt.art_flavor}</p>
-                      <Divider/>
-                      <p className="galleryText">{this.state.activeArt.art_text}</p>
-                      <Divider/>
-                        {(this.state.audio_playing)? (
-                          <ReactPlayer url={`${this.state.activeArt.art_audio}`}
-                                        height={100}
-                                        controls={true}
-                                        playing={this.state.audio_playing}
-                                        loop={this.state.audio_loop}
-                                        volume={this.state.audio_volume} /> ):null}
-                    </div>
-                  }>
-                    <div>
-                      <p>{this.state.activeArt.art_flavor}</p>
-                    </div>
-                  </Card>
+          <Col s={1} m={1} l={1} xl={1} > </Col>
+          <Col s={10} m={10} l={10} xl={10}>
+            {!this.state.showArt ? null : (
+            <div>
+              <Col className="" s={12} m={12} l={3} xl={3}>
+                <Collection>
+                  {
+                    this.state.gallery.art.map(art => {
+                      return (
+                        <CollectionItem active={(this.state.activeArt)?(this.state.activeArt.id===art.id):false} key={art.art_shortid} onClick={() => this.setActiveArt(art)}>
+                          <p>{art.art_title}</p>
+                        </CollectionItem> )
+                      })
+                    }
+                  </Collection>
                 </Col>
-              </div>
-            )}
-            {!this.state.searchForImage ? null :
-              (
-                <ArtImage setActiveArt={this.setActiveArt}
-                          museum={this.museum}
-                          gallery={this.state.gallery}/>
+                <Col className="" s={12} m={12} l={9} xl={9}>
+                  <Card
+                    header={ <CardTitle reveal image={this.state.activeArt.art_picture_url} waves='light' /> }
+                    title={this.state.activeArt.art_title}
+                    reveal={
+                      <div>
+                        <Divider/>
+                        <p className="galleryText flow-text">{`${this.state.activeArt.art_flavor}`}</p>
+                        <p className="galleryText flow-text">{`${this.state.gallery.gallery_title}`}</p>
+                        <Divider/>
+                        <p className="galleryText flow-text">{this.state.activeArt.art_text}</p>
+                        <Divider/>
+                          {(this.state.audio_playing)? (
+                            <ReactPlayer url={`${this.state.activeArt.art_audio}`}
+                                          height={100}
+                                          controls={true}
+                                          playing={this.state.audio_playing}
+                                          loop={this.state.audio_loop}
+                                          volume={this.state.audio_volume} /> ):null}
+                      </div>
+                    }>
+                      <div>
+                        <p>{this.state.activeArt.art_flavor}</p>
+                      </div>
+                    </Card>
+                  </Col>
+                </div>
               )}
-            {!this.state.audio ? null : (
-              <Col>
-                <Input type='checkbox' value='green' label='Disable Audio' defaultChecked='checked' onChange={() => this.setState({audio_playing: (!this.state.audio_playing)}) } />
-                <Input type='checkbox' value='green' label='Enable Looping Audio' defaultChecked='checked' onChange={() => this.setState({audio_playing: (!this.state.audio_loop)}) } />
-              </Col>
-            )}
+              {!this.state.searchForImage ? null :
+                (
+                  <ArtImage setActiveArt={this.setActiveArt}
+                            museum={this.museum}
+                            gallery={this.state.gallery}/>
+                )}
+              {!this.state.audio ? null : (
+                <Col s={12} m={12} l={12} xl={12}>
+                  <Collection>
+                    <CollectionItem>
+                       -  The Automatic Audio Tour is {`${this.state.audio_playing?"Enabled":"Disabled"}`}
+                      <Input type='checkbox' value='green' label='Enable Audio Tour' defaultChecked='checked' onChange={() => this.setState({audio_playing: (!this.state.audio_playing)}) } />
+                    </CollectionItem>
+                    <CollectionItem>
+                      -  The Looping Audio Tour is {`${this.state.audio_loop?"Enabled":"Disabled"}`}
+                      <Input type='checkbox' value='green' label='Enable Looping Audio' defaultChecked='checked' onChange={() => this.setState({audio_playing: (!this.state.audio_loop)}) } />
+                    </CollectionItem>
+                  </Collection>
+                </Col>
+              )}
+          </Col>
         </Row>
       </Swipeable>
     )

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Col, Row, Parallax, Divider } from 'react-materialize'
+import { Col, Row, Parallax, Divider, Navbar, NavItem } from 'react-materialize'
 import { Redirect } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
@@ -28,28 +28,34 @@ class MuseumPage extends Component {
     <Swipeable onSwipeRight={() => this.props.history.push('/') }>
       <div>
         <Row>
-          <Parallax imageSrc={this.museum.museum_picture}/>
-          <Col s={12} m={12} l={12} xl={12} s2={2} m2={2} l2={2} xl2={2}>
-            <div className="section">
-              <Row className="container">
-                <h2 className="header">{`The ${this.museum.museum_name}`}</h2>
-                <Divider />
-                <p className="grey-text text-darken-3 lighten-3 valign-wrapper text">Explore the open galleries.</p>
-              </Row>
-            </div>
-          </Col>
+          <Navbar brand={this.museum?this.museum.museum_name:null} right={true}>
+            <NavItem ><i class="far fa-user"></i></NavItem>
+          </Navbar>
         </Row>
-
         <Row>
-          <Col className="padcard" s={12} m={12} l={6} xl={6} >
-            {this.museum.gallery.map(gallery => {if(gallery.id%2 === 0) return (
-              <GalleryCard key={gallery.gallery_shortid} props={this.props} path={this.props.location.pathname} gallery={gallery}/>
-            )})}
-          </Col>
-          <Col className="museumCardCol" s={12} m={12} l={6} xl={6} >
-            {this.museum.gallery.map(gallery => {if(gallery.id%2 === 1) return (
-              <GalleryCard key={gallery.gallery_shortid} props={this.props} path={this.props.location.pathname} gallery={gallery}/>
-            )})}
+          <Parallax imageSrc={this.museum.museum_picture}/>
+          <Col s={1} m={1} l={1} xl={1} > </Col>
+          <Col s={10} m={10} l={10} xl={10}>
+            <Col s={12} m={12} l={12} xl={12}>
+              <div className="section">
+                <Row className="container">
+                  <h2 className="header">{`The ${this.museum.museum_name}`}</h2>
+                  <Divider />
+                  <p className="grey-text text-darken-3 lighten-3 valign-wrapper text">Explore the open galleries.</p>
+                </Row>
+              </div>
+            </Col>
+
+            <Col className="padcard" s={12} m={12} l={6} xl={6} >
+              {this.museum.gallery.map(gallery => {if(gallery.id%2 === 0) return (
+                <GalleryCard key={gallery.gallery_shortid} props={this.props} path={this.props.location.pathname} gallery={gallery}/>
+              )})}
+            </Col>
+            <Col className="museumCardCol" s={12} m={12} l={6} xl={6} >
+              {this.museum.gallery.map(gallery => {if(gallery.id%2 === 1) return (
+                <GalleryCard key={gallery.gallery_shortid} props={this.props} path={this.props.location.pathname} gallery={gallery}/>
+              )})}
+            </Col>
           </Col>
         </Row>
       </div>

@@ -10,7 +10,7 @@ const GalleryCard = ({props, gallery, path}) => (
               reveal={
                 <div>
                   <Divider/>
-                  <p className="galleryText">{gallery.gallery_text}</p>
+                  <p className="galleryText flow-text">{gallery.gallery_text}</p>
                   <Divider/>
                   <Link to={`${path}/${gallery.gallery_title.replace(/\s+/g, '')}`}>
                     <p> Explore the art in this gallery. </p>

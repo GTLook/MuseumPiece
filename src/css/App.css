@@ -57,6 +57,17 @@ div.card-content {
   text-align: center;
 }
 
+.row {
+  justify-content: center;
+  flex-direction: column;
+  margin: auto;
+  margin-left: auto;
+  margin-right: auto;
+
+  align-items: center;
+  align-self: center;
+}
+
 /* footer css */
 
 .footer-block {
@@ -94,7 +105,36 @@ div.card-content {
   margin: 20px;
 }
 
-.audio {
-  width: 300px;
-  height: 54px;
+/* Background */
+
+body.background {
+   background-image: url("../Assets/mp-logo.png");
+   background-attachment: fixed;
+   background-position: center;
+   background-repeat: no-repeat;
+   background-size: auto;
+   opacity: 0.4;
+}
+
+.space {
+  padding-bottom: 30px;
+}
+
+/* Nav Bar */
+
+nav {
+  background-color: white;
+}
+
+nav ul a{
+  color: black;
+  text-decoration-color: black;
+}
+
+/* .fa-user {
+  color: black;
+} */
+
+nav .brand-logo {
+color: black;
 }
