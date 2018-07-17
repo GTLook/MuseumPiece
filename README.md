@@ -1,6 +1,6 @@
 # Museum Piece 
 
-CoffeeShop is a coffee ordering web application.  It allows users to create a profile, log in, and order custom coffee drinks.  The app utilizes the Google API location codes to find the nearest coffee shops and walking distance to the shop.  Users can craft their drink order and set the time they want to pick up their drinks for a delay up to 30 minutes.  Coffee shop owners can receive incoming orders, sorted by pickup time, and fulfill orders.
+https://docs.google.com/presentation/d/1ufyNgK7_vhhR8ESGQtnHAnbSX7vD8xdYgHYGUn1YL-k/edit?usp=sharing
 
 ## Getting Started
 
