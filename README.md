@@ -23,6 +23,12 @@ What things you need to install the software and how to install them
 
 Make sure the database and backend are created first!
 
+Install Node dependencies:
+
+```shell
+* run npm install
+```
+
 Start the react development server:
 
 ```shell
@@ -50,7 +56,6 @@ This project has been deployed on Heroku at the address:
 * [Amazon Polly](https://aws.amazon.com/polly/) - Voice to speach
 * [Amazon S3](https://aws.amazon.com/s3/) - Data storage
  
-
 
 ## Contributing
 
