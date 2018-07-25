@@ -1,6 +1,6 @@
 # Museum Piece 
 
-Museum Piece is a mobile first react applicaiton.  It is designed to enhance user experince at museums!  It uses image recognition and audio tours to let the users pick their own path through the museum.  Users can view art information and listen to the cusomized audio tour.  Current gallery is seeded for Van Gouh museum - permenant collection for testing.  
+Museum Piece is a mobile first react application. It is designed to enhance user experience at museums! It uses image recognition and audio tours to let the users pick their own path through the museum. Users can view art information and listen to the customized audio tour. Current gallery is seeded for Van Gouh museum - permanent collection for testing.
 
 ## Getting Started
 
