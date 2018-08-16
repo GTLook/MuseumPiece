@@ -1,7 +1,5 @@
 import React from 'react'
 import { Card, CardTitle, Divider } from 'react-materialize'
-// import { Link } from 'react-router-dom'
-
 
 const MuseumCard = ({museum}) => (
   <div>

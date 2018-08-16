@@ -57,29 +57,3 @@ export const getUser = () => (
     })
   }
 )
-
-// export const visionAPI = (body) => (
-//   dispatch => {
-//     axios.post(`https://vision.googleapis.com/v1/images:annotate?key=${googleAPIkey}`, body)
-//     .then((response) => {
-//       dispatch({
-//         type: POST_GOOGLE_API,
-//         payload: response.data
-//       })
-//     })
-//     .catch((error) => console.log(`Vision API Error - ${error}`))
-//   }
-// )
-
-
-// export const getAllUsers = () => (
-//   dispatch => {
-//     axios.get(`${API}/users/`)
-//     .then((response) => {
-//       dispatch({
-//         type: GET_ALL_USERS,
-//         payload: response.data.data
-//       })
-//     })
-//   }
-// )

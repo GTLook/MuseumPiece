@@ -7,7 +7,6 @@ import { Swipeable } from 'react-touch'
 
 import { getAllGalleries } from '../actions'
 import { withAuthentication } from '../helpers'
-
 import GalleryCard from '../Components/GalleryCard'
 
 class MuseumPage extends Component {
@@ -23,7 +22,6 @@ class MuseumPage extends Component {
 
   render() {
     if(!this.museum) return <Redirect to="/"/>
-    //
     return(
     <Swipeable onSwipeRight={() => this.props.history.push('/') }>
       <div>
@@ -45,7 +43,6 @@ class MuseumPage extends Component {
                 </Row>
               </div>
             </Col>
-
             <Col className="padcard" s={12} m={12} l={6} xl={6} >
               {this.museum.gallery.map(gallery => {if(gallery.id%2 === 0) return (
                 <GalleryCard key={gallery.gallery_shortid} props={this.props} path={this.props.location.pathname} gallery={gallery}/>

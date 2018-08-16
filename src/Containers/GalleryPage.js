@@ -30,7 +30,6 @@ class GalleryPage extends Component {
 
   static getDerivedStateFromProps = (props, state) =>{
     const gallery = props.galleryList.find(ele => ele.gallery_title.replace(/\s+/g, '') === props.match.params.galleryId)
-    // console.log(state)
     if(state.activeArt.id){
       return {...state }
     }

@@ -2,13 +2,11 @@ import React, { Component } from 'react'
 import { Route, Redirect } from 'react-router-dom'
 import axios from 'axios'
 
-////////////////////////////////////////////////////////////////////
-/// AuthenticationWrapper //////////////////////////////////////////
+// AuthenticationWrapper
 
 class AuthenticationWrapper extends Component{
   constructor(props){
     super(props)
-
     this.state = {
       authState: null,
       authStatePending: true
@@ -22,7 +20,6 @@ class AuthenticationWrapper extends Component{
   componentWillMount(){
     const authState = AuthenticationService.getAuthState()
     this.setState({ authState, authStatePending: authState ? false : true })
-
     AuthenticationService.registerEvent(this.handleAuthState)
   }
 
@@ -36,15 +33,13 @@ class AuthenticationWrapper extends Component{
       <Component {...props} authState={this.state.authState} authStatePending={this.state.authStatePending}/>
     )
   }
-
 }
 
 export const withAuthentication = (Component) =>
   (props) =>
     <AuthenticationWrapper Component={Component} {...props}/>
 
-////////////////////////////////////////////////////////////////////
-/// AuthenticationService //////////////////////////////////////////
+// AuthenticationService
 
 class AuthService{
   constructor(){
@@ -74,8 +69,7 @@ class AuthService{
 }
 export const AuthenticationService = new AuthService()
 
-////////////////////////////////////////////////////////////////////
-/// AuthenticatedRoute /////////////////////////////////////////////
+// AuthenticatedRoute
 
 const AuthRoute = (props) => {
   if(props.authStatePending && !props.authState){
@@ -88,8 +82,8 @@ const AuthRoute = (props) => {
 
 export const AuthenticatedRoute = withAuthentication(AuthRoute)
 
-////////////////////////////////////////////////////////////////////
-/// request ////////////////////////////////////////////////////////
+
+// request 
 
 export const request = (path, method = 'get', body = null) => {
   let bearerToken = ''

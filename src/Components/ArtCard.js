@@ -1,7 +1,5 @@
 import React from 'react'
 import { CollapsibleItem, Divider } from 'react-materialize'
-// import { Link } from 'react-router-dom'
-
 
 const ArtCard = ({art}) => (
     <CollapsibleItem header={art.art_title} icon=''>

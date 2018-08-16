@@ -4,7 +4,6 @@ import Webcam from 'react-webcam'
 import { connect } from 'react-redux'
 import axios from 'axios'
 
-//import { visionAPI } from '../actions'
 import { withAuthentication } from '../helpers'
 
 class ArtImage extends Component {

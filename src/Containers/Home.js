@@ -4,7 +4,6 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { Swipeable } from 'react-touch'
 import { Link } from 'react-router-dom'
-// import { HashLink as Link } from 'react-router-hash-link'
 
 import { museumList } from '../actions'
 import { withAuthentication } from '../helpers'
@@ -16,16 +15,6 @@ class Home extends Component {
 
   componentDidMount(){
     this.props.getAllMuseums()
-    // request('/auth/token')
-    //   .then(response => {
-    //     AuthenticationService.setAuthState(response.data)
-    //     return request('/users')
-    //   })
-    //   .then(response => {
-    //     const authState = AuthenticationService.getAuthState()
-    //     const activeUser = response.data.data.find(el => el.id === authState.id)
-    //     AuthenticationService.setAuthState(activeUser)
-    //   })
   }
 
   render() {
